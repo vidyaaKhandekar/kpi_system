@@ -1,24 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import Box from '@mui/material/Box';
+import Navbar from './Components/Navbar';
+import { Stack } from '@mui/material';
+import Sidebar from './Components/Sidebar';
+import Feed from './Components/Feed';
+import Footar from './Components/Footar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   <Box sx={{
+    m:"0px",
+    p:"0px",
+    width:"100vw"
+   }} >
+    <Navbar/>
+    <Stack direction="row" spacing={2} >
+      <Sidebar/>
+      <Feed/>
+    </Stack>
+    <Footar/>
+   </Box>
   );
 }
 
