@@ -1,9 +1,5 @@
 import {
   Stack,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   Typography,
   Button,
 } from "@mui/material";
@@ -11,17 +7,42 @@ import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../CustomHook/useFetch";
 import TextInput from "../InputFields/TextInput";
-
+import SelectInput from "../InputFields/SelectInput";
+import { AddRoleformSchema } from "./ValidationSchema";
 const AddRoleForm = () => {
-    const[departmentList,setDepartmentList]=useState([]);
-    const { data, isLoading, error }=useFetch('http://localhost:4000/api/dept/getAll');
-    useEffect(() => {
-        if (isLoading) return;
-        if (error) return console.error(error);
+  const [departmentList, setDepartmentList] = useState([]);
+  const { data, isLoading, error } = useFetch(
+    "http://localhost:4000/api/dept/getAll"
+  );
+  useEffect(() => {
+    if (isLoading) return;
+    if (error) return console.error(error);
+
+    setDepartmentList(data);
     
-        setDepartmentList(data);
-        console.log(data);
-      }, [data, isLoading, error]);
+  }, [data, isLoading, error]);
+  console.log(Formik.values)
+  //onsubmit
+  const onSubmit=  async (values,{resetForm}) => {
+    const role=values.role;
+    const dept=values.department;
+    console.log(typeof(dept))
+    console.log("OnsubmitCalled")
+    const responce = await fetch('http://localhost:4000/api/role/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({name: role, deptId: dept})
+   
+  });
+
+const data = await responce.json();
+
+console.log(data);
+resetForm();
+}
+
   return (
     <Stack
       spacing={3}
@@ -34,35 +55,33 @@ const AddRoleForm = () => {
       <Typography variant="h4" sx={{ alignSelf: "center" }}>
         ADD ROLE
       </Typography>
-      <Formik>
-        <Stack
-          component={Form}
-          spacing={2}
-          sx={{ width: "600px" }}
-        >
-          <FormControl fullWidth >
-            <InputLabel id="demo-simple-select-label">Department</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="Department"
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 200, // adjust the height to your liking
-                    overflowY: 'auto',
-                  },
-                },
-              }}
+      <Formik
+        initialValues={{
+          department: "",
+          role: "",
+        }}
+        validationSchema={AddRoleformSchema}
+        onSubmit={onSubmit}
+      >
+        {(props) => (
+          <Stack component={Form} spacing={2} sx={{ width: "600px" }}>
+            <SelectInput
+              departmentList={departmentList}
+              name="department"
+              label="department"
+              error={props.errors.department?true:false} 
+            />
+            <TextInput label="role" name="role" error={props.errors.role?true:false}  />
+         
+            <Button
+            type="submit"
+              variant="contained"
+              sx={{ width: "200px", height: "50px", alignSelf: "center" }}
             >
-              {departmentList.map((item,index)=>(
-                <MenuItem value={item.id}>{item.name}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextInput label="role" name="role"/>
-          <Button variant="contained" sx={{width:"200px",height:"50px",alignSelf:"center"}}>Add Role</Button>
-        </Stack>
+              Add Role
+            </Button>
+          </Stack>
+        )}
       </Formik>
     </Stack>
   );

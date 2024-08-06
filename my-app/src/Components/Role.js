@@ -1,8 +1,12 @@
 import React from 'react'
-import AddRole from './AddRole'
+import AddRoleButton from './AddRole'
+import { Stack } from '@mui/material'
 const Role = () => {
   return (
-    <AddRole/>
+    
+    <Stack>
+        <AddRoleButton/>
+    </Stack>
   )
 }
 
