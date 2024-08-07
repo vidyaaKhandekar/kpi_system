@@ -1,11 +1,18 @@
 import React from 'react'
 import AddRoleButton from './AddRole'
-import { Stack } from '@mui/material'
+import { Stack,Button } from '@mui/material'
+import { Link, Outlet } from 'react-router-dom'
+import AddRole from './AddRole'
+import DisplayRole from './DisplayRole'
+import RoleDashboard from './RoleDashboard'
+import AddRoleForm from './AddRoleForm'
 const Role = () => {
   return (
     
-    <Stack>
-        <AddRoleButton/>
+    <Stack flex={8}>
+        
+        <Outlet />
+        
     </Stack>
   )
 }

@@ -18,7 +18,7 @@ const Department=()=> {
 
     console.log(DepartmentList);
   return (
-    <Stack >
+    <Stack flex={8}>
         <AddDepartment fetchData={fetchData}/>
         <DisplayDepartment DepartmentList={DepartmentList}/>
     </Stack>

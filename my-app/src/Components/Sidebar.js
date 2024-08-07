@@ -1,5 +1,6 @@
 import { Box,List,ListItemIcon,ListItemButton,ListItem,ListItemText, styled } from "@mui/material";
 import { AdminList } from "./Constant";
+import { Link } from "react-router-dom";
 const Sidebar =()=>{
     const StyledListItem=styled(ListItem)({
         padding:"5px",
@@ -15,7 +16,7 @@ const Sidebar =()=>{
             <List>
                 {AdminList.map((item,index)=>(
                     <StyledListItem  key={index}>
-                        <ListItemButton>
+                        <ListItemButton component={Link} to={item.text}>
                             <ListItemIcon>
                                 {item.icon}
                             </ListItemIcon>

@@ -9,7 +9,7 @@ import { Stack } from '@mui/material';
 import Sidebar from './Components/Sidebar';
 import Feed from './Components/Feed';
 import Footar from './Components/Footar';
-
+import {Outlet} from 'react-router-dom'
 function App() {
   return (
    <Box sx={{
@@ -20,7 +20,7 @@ function App() {
     <Navbar/>
     <Stack direction="row" spacing={2} >
       <Sidebar/>
-      <Feed/>
+      <Outlet/>
     </Stack>
     <Footar/>
    </Box>
