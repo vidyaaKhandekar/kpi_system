@@ -55,6 +55,8 @@ import {
 } from "react-router-dom";
 import RoleDashboard from "../Components/RoleDashboard";
 import AddRoleForm from "../Components/AddRoleForm";
+import EmployeeDashboard from "../Components/EmployeeDashboard";
+import AddEmployeeForm from "../Components/AddEmployeeForm";
 // component imports
 
 const Router = createBrowserRouter(
@@ -62,7 +64,10 @@ const Router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index element={<Department />} />
       <Route path="department" element={<Department />} />
-      <Route path="employee" element={<Employee />} />
+      <Route path="employee" element={<Employee />}>
+        <Route index element={<EmployeeDashboard />} />
+        <Route path="addemployee" element={<AddEmployeeForm />} />
+      </Route>
       <Route path="Role" element={<Role />}>
         <Route index element={<RoleDashboard />} />
         <Route path="addrole" element={<AddRoleForm />} />

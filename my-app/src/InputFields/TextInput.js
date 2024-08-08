@@ -8,7 +8,7 @@ function TextInput({label,...props}) {
   return (
     <TextField  {...props} {...meta}
         error={field.error&&field.touched}
-        label={field.error&&field.touched?"Required Field":`${label}`} />
+        label={field.error&&field.touched?`${field.error}`:`${label}`} />
   )
 }
 

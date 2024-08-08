@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useFetchp = (url, params = {}) => {
+const useFetchp = (url, params) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -8,13 +8,13 @@ const useFetchp = (url, params = {}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url, {
+        const response = await fetch(`${url}${params}`, {
           method: 'GET',
-          params,
           headers: {
             'Content-Type': 'application/json'
           }
         });
+      
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
