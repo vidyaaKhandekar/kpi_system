@@ -71,12 +71,10 @@ const AddRoleForm = () => {
                 departmentList={departmentList}
                 name="department"
                 label="department"
-                error={props.errors.department ? true : false}
               />
               <TextInput
                 label="role"
                 name="role"
-                error={props.errors.role ? true : false}
               />
 
               <Button

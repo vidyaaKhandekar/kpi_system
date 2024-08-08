@@ -5,35 +5,24 @@ import {
     Select,
     MenuItem,
 } from "@mui/material";
-import { useField, useFormikContext } from 'formik';
+import { useField } from 'formik';
 
-const SelectInput = ({ departmentList, label, name, error, ...props }) => {
-    const [meta, field, helper] = useField(props);
-    const { setFieldValue } = useFormikContext();
-
-    const handleChange = (event) => {
-        setFieldValue(name, event.target.value);
-    };
-
-    const getSelectedItem = () => {
-        if (field.value && departmentList) {
-            const selectedItem = departmentList.find(item => item.id === field.value);
-            return selectedItem ? selectedItem.name : '';
-        }
-        return '';
-    };
+const SelectInput = ({ departmentList, label, name, ...props }) => {
+    const [meta, field, helper] = useField(name);
+    // console.log(field)
+    // console.log(meta.values)
 
     return (
         <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">{label}</InputLabel>
             <Select
+               {...props} {...meta}
+                defaultValue=""
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={field.value}
-                onChange={handleChange}
-                error={error}
-                label={field.error ? `${field.error}` : `${label}`}
-                renderValue={() => getSelectedItem()}
+                error={field.error && field.touched}
+                label={field.error&&field.touched ?`${field.error}`:`${label}`}
+            
                 MenuProps={{
                     PaperProps: {
                         style: {
@@ -43,7 +32,7 @@ const SelectInput = ({ departmentList, label, name, error, ...props }) => {
                     },
                 }}
             >
-                {departmentList && departmentList.map((item, index) => (
+                {departmentList?.map((item) => (
                     <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
                 ))}
             </Select>
