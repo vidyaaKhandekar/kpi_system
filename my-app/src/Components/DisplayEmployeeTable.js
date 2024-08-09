@@ -8,26 +8,20 @@ export default function DisplayEmployeeTable({EmployeeList})  {
         { field: 'id', headerName: 'ID', width: 70 ,sortable: false,},
         { field: 'name', headerName: 'Name', width: 130 ,sortable: false,},
         { field: 'email', headerName: 'Email', width: 330,sortable: false, },
+       
         {
-          field: 'role',
-          headerName: 'Role',
-          width: 130,
-          sortable: false,
-        },
-        {
-          field: 'fullName',
-          headerName: 'Full name',
-          description: 'This column has a value getter and is not sortable.',
-          sortable: false,
-          width: 160,
-          valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
-        },
+            field: 'role_name',
+            headerName: 'Role Name',
+            width: 130,
+            sortable: false,
+          },
+        
       ];
       
     
       const rows = EmployeeList;
   return (
-    <div style={{ height: 400, width: '100%', alignContent:"center"}}>
+    <div style={{ height: 400, width: '70%', alignContent:"center"}}>
       <DataGrid
         rows={rows}
         columns={columns}

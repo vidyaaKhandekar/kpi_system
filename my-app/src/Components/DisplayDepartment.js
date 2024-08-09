@@ -12,7 +12,7 @@ const DisplayDepartment = ({DepartmentList}) => {
     overflow: 'auto',
     maxHeight: 400,
     }}>
-            {DepartmentList.map((item,index)=>(
+            {DepartmentList?.map((item,index)=>(
                 <ListItem  key={DepartmentList.id}>
                    
                         <ListItemText primary={item.name} />
