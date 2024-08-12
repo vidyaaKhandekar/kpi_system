@@ -18,4 +18,10 @@ export const AddRoleformSchema=yup.object().shape({
     department:yup.string().required("Department is required field"),
     role:yup.string().required("role is required field")
  })
- //name, email, roleId, deptId
+//Schema for KPI form
+export const AddKpiFormSchema=yup.object().shape({
+    description:yup.string().required("required field"),
+    weight:yup.number("Weight must be number").required("Required Field"),
+    department:yup.string().required("Department is required field"),
+    role:yup.string().required("role is required field")
+ })

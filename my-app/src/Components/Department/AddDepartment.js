@@ -1,9 +1,8 @@
 import { Stack, Typography, Button } from '@mui/material'
 import React from 'react'
 import {Form, Formik} from 'formik';
-import {DepartmentSchema} from './ValidationSchema'
-import TextInput from '../InputFields/TextInput';
-
+import TextInput from '../../InputFields/TextInput';
+import { DepartmentSchema } from '../ValidationSchema';
 
 const AddDepartment = ({fetchData}) => {
 

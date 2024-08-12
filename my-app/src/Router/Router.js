@@ -1,17 +1,15 @@
 import App from "../App";
-import Department from "../Components/Department";
-import Employee from "../Components/Employee";
-import Role from "../Components/Role";
-import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-} from "react-router-dom";
-import RoleDashboard from "../Components/RoleDashboard";
-import AddRoleForm from "../Components/AddRoleForm";
-import EmployeeDashboard from "../Components/EmployeeDashboard";
-import AddEmployeeForm from "../Components/AddEmployeeForm";
+import Department from "../Components/Department/Department";
+import Employee from "../Components/Employee/Employee";
+import Role from "../Components/Role/Role";
+import {createBrowserRouter,createRoutesFromElements,Route,} from "react-router-dom";
+import RoleDashboard from "../Components/Role/RoleDashboard";
+import AddRoleForm from "../Components/Role/AddRoleForm";
+import EmployeeDashboard from "../Components/Employee/EmployeeDashboard";
+import AddEmployeeForm from "../Components/Employee/AddEmployeeForm";
 import Kpi from "../Components/AdminKPI.js/Kpi";
+import KpiDashboard from "../Components/AdminKPI.js/KpiDashboard";
+import AddKpiForm from "../Components/AdminKPI.js/AddKpiForm";
 // component imports
 
 const Router = createBrowserRouter(
@@ -27,7 +25,10 @@ const Router = createBrowserRouter(
         <Route index element={<RoleDashboard />} />
         <Route path="addrole" element={<AddRoleForm />} />
       </Route>
-      <Route path="kpi" element={<Kpi />} />
+      <Route path="Kpi" element={<Kpi />}>
+        <Route index element={<KpiDashboard />} />
+        <Route path="addKpi" element={<AddKpiForm />} />
+      </Route>
     </Route>
   )
 );

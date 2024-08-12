@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Navbar from './Components/Navbar';
 import { Stack } from '@mui/material';
 import Sidebar from './Components/Sidebar';
-import Feed from './Components/Feed';
 import Footar from './Components/Footar';
 import {Outlet} from 'react-router-dom'
 function App() {

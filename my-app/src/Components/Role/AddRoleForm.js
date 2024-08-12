@@ -1,10 +1,10 @@
 import { Stack, Typography, Button } from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import useFetch from "../CustomHook/useFetch";
-import TextInput from "../InputFields/TextInput";
-import SelectInput from "../InputFields/SelectInput";
-import { AddRoleformSchema } from "./ValidationSchema";
+import useFetch from "../../CustomHook/useFetch";
+import TextInput from "../../InputFields/TextInput";
+import SelectInput from "../../InputFields/SelectInput";
+import { AddRoleformSchema } from "../ValidationSchema";
 import { Link } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 const AddRoleForm = () => {

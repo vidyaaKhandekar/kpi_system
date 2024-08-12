@@ -1,9 +1,9 @@
 import { Stack, Typography, Button, Select, MenuItem ,FormControl,InputLabel} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
-import useFetch from "../CustomHook/useFetch";
-import TextInput from "../InputFields/TextInput";
-import SelectInput from "../InputFields/SelectInput";
+import useFetch from "../../CustomHook/useFetch";
+import TextInput from "../../InputFields/TextInput";
+import SelectInput from "../../InputFields/SelectInput";
 
 import { Link } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
@@ -12,6 +12,8 @@ import * as yup from "yup";
 const AddEmployeeForm = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [roleList, setRoleList] = useState([]);
+  // const {id} = useParams();
+
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
   );
@@ -103,15 +105,7 @@ const AddEmployeeForm = () => {
       )
       .required("Email is required"),
     department: yup.string().required("Department is required field"),
-    //  role:yup.string().when('department', {
-    //   is: true,
-    //   then: (AddEmployeeFormSchema)=>AddEmployeeFormSchema.oneOf(
-    //     roleList.map(item => item.id),
-    //     'Select a department'
-    //   ).required('Role is required'),
-    //   otherwise: (AddEmployeeFormSchema)=>AddEmployeeFormSchema.notRequired(),
-    // }),
-    role: yup.string().required("Role is required"),
+    role: yup.string().required("Role is departmentrequired"),
   });
 
   return (
@@ -154,31 +148,6 @@ const AddEmployeeForm = () => {
               <TextInput label="name" name="name" />
               <TextInput label="email" name="email" />
               <TextInput label="apprId" name="apprId" />
-              {/* <Select
-                defaultValue=""
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                name="department"
-                label="department"
-                onChange={(e) => {
-                  handleDepartmentChange(e);
-                }}
-                error={props.errors.department && props.touched.department}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 200,
-                      overflowY: "auto",
-                    },
-                  },
-                }}
-              >
-                {departmentList?.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select> */}
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Department</InputLabel>
                 <Select

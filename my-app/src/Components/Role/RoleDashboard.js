@@ -1,6 +1,5 @@
 import React from 'react'
 import { Stack } from '@mui/material'
-import { Outlet } from 'react-router-dom'
 import AddRole from './AddRole'
 import DisplayRole from './DisplayRole'
 const RoleDashboard = () => {

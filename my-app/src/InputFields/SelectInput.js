@@ -9,8 +9,7 @@ import { useField } from 'formik';
 
 const SelectInput = ({ departmentList, label, name, ...props }) => {
     const [meta, field, helper] = useField(name);
-    // console.log(field)
-    // console.log(meta.values)
+    
 
     return (
         <FormControl fullWidth>

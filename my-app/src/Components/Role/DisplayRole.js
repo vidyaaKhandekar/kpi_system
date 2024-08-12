@@ -1,12 +1,13 @@
-import { Stack, Button, Select, Typography } from "@mui/material";
+import { Stack, Button } from "@mui/material";
 import React from "react";
-import SelectInput from "../InputFields/SelectInput";
+import SelectInput from "../../InputFields/SelectInput";
 import { Form, Formik } from "formik";
-import useFetch from "../CustomHook/useFetch";
+import useFetch from "../../CustomHook/useFetch";
 import { useEffect, useState } from "react";
-import { DepartmentSchema } from "./ValidationSchema";
-import DisplayDepartment from "./DisplayDepartment";
-import AddRole from "./AddRole";
+import { DepartmentSchema } from "../ValidationSchema";
+import DisplayDepartment from "../Department/DisplayDepartment";
+
+
 
 
 const DisplayRole = () => {
