@@ -49,7 +49,7 @@ const AddKpiForm = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list = data.roles;
+    const list = data;
     setRoleList(list);
   };
   //on submit

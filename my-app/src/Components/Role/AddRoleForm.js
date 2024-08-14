@@ -6,9 +6,8 @@ import TextInput from "../../InputFields/TextInput";
 import SelectInput from "../../InputFields/SelectInput";
 import { AddRoleformSchema } from "../ValidationSchema";
 import { Link } from "react-router-dom";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
 const AddRoleForm = () => {
-  console.log("Form rendeted");
   const [departmentList, setDepartmentList] = useState([]);
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
@@ -19,7 +18,7 @@ const AddRoleForm = () => {
 
     setDepartmentList(data);
   }, [data, isLoading, error]);
-  console.log(Formik.values);
+
   //onsubmit
   const onSubmit = async (values, { resetForm }) => {
     const role = values.role;
@@ -43,8 +42,13 @@ const AddRoleForm = () => {
       <div
         style={{ display: "flex", justifyContent: "flex-end", margin: "30px" }}
       >
-        <Button  sx={{ width: "15%",height:"55px" }} component={Link} 
-      to='/role'><CloseIcon/></Button>
+        <Button
+          sx={{ width: "15%", height: "55px" }}
+          component={Link}
+          to="/role"
+        >
+          <CloseIcon />
+        </Button>
       </div>
       <Stack
         spacing={3}
@@ -66,16 +70,13 @@ const AddRoleForm = () => {
           onSubmit={onSubmit}
         >
           {(props) => (
-            <Stack component={Form} spacing={2} sx={{ width: "600px" }}>
+            <Stack component={Form} spacing={2} sx={{ width: "60%" }}>
               <SelectInput
                 departmentList={departmentList}
                 name="department"
                 label="department"
               />
-              <TextInput
-                label="role"
-                name="role"
-              />
+              <TextInput label="role" name="role" />
 
               <Button
                 type="submit"

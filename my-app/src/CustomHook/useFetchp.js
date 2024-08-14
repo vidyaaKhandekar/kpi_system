@@ -1,36 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
-const useFetchp = (url, params) => {
+export const useFetch1 = (url) => {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const refetch = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      setData(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${url}${params}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-      
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    refetch();
 
-    fetchData();
-  }, [url, params]);
+  }, [url]);
 
-  return { data, isLoading, error };
+  return { data, error, isLoading, refetch };
 };
-
-export default useFetchp;

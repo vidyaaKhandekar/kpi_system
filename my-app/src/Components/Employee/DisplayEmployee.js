@@ -5,14 +5,14 @@ import { Form, Formik } from "formik";
 import useFetch from "../../CustomHook/useFetch";
 import { useEffect, useState } from "react";
 import { DepartmentSchema } from "../ValidationSchema";
-import DisplayEmployeeTable from "./DisplayEmployeeTable";
-
+import { EmployeeTableColumns } from "../../TableContent/Tablecolums";
+import DisplayTable from "../../TableContent/DisplayTable";
 
 
 const DisplayEmployee = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [Employee, setEmployee] = useState([]);
-  const [departmentId,setDepartmentID]=useState("");
+  const [Role,setRole]=useState([]);
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
   );
@@ -25,7 +25,6 @@ const DisplayEmployee = () => {
   //fetch role according to selected department
   const onSubmit = async (values, { resetForm }) => {
     const deptId = values.department;   
-    setDepartmentID(deptId);
     const response = await fetch(
       `http://localhost:4000/api/emp/getByDept/${deptId}`,
       {
@@ -35,15 +34,33 @@ const DisplayEmployee = () => {
         },
       }
     );
-    console.log(response);
+    
     if (!response.ok) {
       console.log("Network ");
     }
     const data = await response.json();
-    const list=data.employees;
-    console.log(list);
+    const list=data;
+   
     setEmployee(list);
+    const response2 = await fetch(
+      `http://localhost:4000/api/role/getByDept/${deptId}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    // console.log(response);
+    if (!response2.ok) {
+      console.log("Network ");
+    }
+    const data2 = await response2.json();
+    const list2 = data2.roles;
+    console.log(list2,"roles");
+    setRole(list2);
   };
+  
 
 
   return (
@@ -53,6 +70,7 @@ const DisplayEmployee = () => {
         paddingTop: "50px",
         justifyContent: "centre",
         alignItems: "center",
+        
       }}
     >
    
@@ -88,9 +106,9 @@ const DisplayEmployee = () => {
         )}
         
       </Formik>
+     
         
-        <DisplayEmployeeTable EmployeeList={Employee} dept_ID={departmentId}/>
-      
+      {Employee?.length!==0 ? <DisplayTable row={Employee} columns={EmployeeTableColumns}/>:null }
     </Stack>
   );
 };

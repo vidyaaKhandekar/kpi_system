@@ -11,7 +11,7 @@ const Sidebar =()=>{
             color:"white",
             display :{xs:"none",sm:"block"},
             height:"700px",
-            boxShadow:"0px 4px 8px rgba(0,0,0,1)"
+            // boxShadow:"0px 4px 8px rgba(0,0,0,1)"
         }}>
             <List>
                 {AdminList.map((item,index)=>(

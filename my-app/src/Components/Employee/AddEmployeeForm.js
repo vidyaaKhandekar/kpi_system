@@ -21,7 +21,6 @@ const AddEmployeeForm = () => {
   useEffect(() => {
     if (isLoading) return;
     if (error) return console.error(error);
-    console.log(data)
     setDepartmentList(data);
   }, [data, isLoading, error]);
 
@@ -44,7 +43,7 @@ const AddEmployeeForm = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list = data.roles;
+    const list = data;
     console.log(list);
     setRoleList(list);
   };
@@ -111,7 +110,7 @@ const AddEmployeeForm = () => {
   return (
     <>
       <div
-        style={{ display: "flex", justifyContent: "flex-end", margin: "30px" }}
+        style={{ display: "flex", justifyContent: "flex-end", margin: "30px"}}
       >
         <Button
           sx={{ width: "15%", height: "55px" }}
@@ -127,6 +126,7 @@ const AddEmployeeForm = () => {
           paddingTop: "20px",
           justifyContent: "centre",
           alignItems: "center",
+          
         }}
       >
         <Typography variant="h5" sx={{ alignSelf: "center" }}>
@@ -144,7 +144,7 @@ const AddEmployeeForm = () => {
           onSubmit={onSubmit}
         >
           {(props) => (
-            <Stack component={Form} spacing={2} sx={{ width: "600px" }}>
+            <Stack component={Form} spacing={2} sx={{ width: "60%" }}>
               <TextInput label="name" name="name" />
               <TextInput label="email" name="email" />
               <TextInput label="apprId" name="apprId" />

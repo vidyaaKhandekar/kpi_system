@@ -10,6 +10,7 @@ import Sidebar from './Components/Sidebar';
 import Footar from './Components/Footar';
 import {Outlet} from 'react-router-dom'
 function App() {
+  
   return (
    <Box sx={{
     m:"0px",

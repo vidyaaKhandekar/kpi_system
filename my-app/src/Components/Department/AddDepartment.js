@@ -47,7 +47,7 @@ return (
                     <Button variant="contained"  type='submit' sx={ {flex:"2"}}>
                         
                             ADD Department</Button>
-                    {console.log(props.errors.department,"Errors")}
+                  
                  </Stack>
             )}
 

@@ -18,7 +18,7 @@ export const EmployeeList=[
 
     },
     {
-        icon:<GroupsIcon ssx={commonSx}/>,
+        icon:<GroupsIcon sx={commonSx}/>,
             text:"My Performance"
     
     }
@@ -45,4 +45,5 @@ export const AdminList=[
     
     }
 ]
-
+ export const deleteDepartmentUrl="http://localhost:4000/api/dept/delete";
+ export const deleteRoleUrl="http://localhost:4000/api/role/delete";
