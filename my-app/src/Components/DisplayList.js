@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import {
   List,
   ListItem,
@@ -6,43 +6,66 @@ import {
   ListItemText,
   IconButton,
   Paper,
+  Snackbar,Alert
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const DisplayList = ({ listItem, fetchData, url, deptId }) => {
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   const deleteListItem = async (Id) => {
-    try {
-      const response = await fetch(`${url}/${Id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json'
+    const response = await fetch(`${url}/${Id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: window.localStorage.getItem("token"),
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSuccess(" Deleted Successfully");
+        
+        } else {
+          setError("Error in Deleting ");
         }
+      })
+      .catch((error) => {
+        setError(error.message);
       });
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Error deleting department');
-      }
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
   };
 
   const handleDelete = async (itemId) => {
     await deleteListItem(itemId);
     deptId ? fetchData(deptId) : fetchData();
   };
-
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(null); // or setSuccess(false) depending on your state
+      }, 2000);
+    }
+  }, [success]);
   return (
     <Paper
       sx={{
         width: "60%",
         justifyContent: "center",
-        alignSelf: "center",
-        paddingTop: "50px",
+        alignItem: "center",
+        paddingTop: "15px",
       }}
     >
+      {success && (
+        <Alert
+          severity="success"
+          duration={2000} 
+          position={{
+            top: 16,
+            right: 16,
+          }}
+        >
+          {success}
+        </Alert>
+      )}
       <List
         sx={{
           width: "100%",
@@ -64,6 +87,7 @@ const DisplayList = ({ listItem, fetchData, url, deptId }) => {
           </ListItem>
         ))}
       </List>
+      
     </Paper>
   );
 };

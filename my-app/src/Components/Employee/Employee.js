@@ -1,12 +1,19 @@
-import { Stack } from '@mui/material'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-
+import Grid from '@mui/material/Grid'
+import DisplayCards from '../DisplayCards'
+import Card from '@mui/material/Card'
+import EmployeeTab from './EmployeeTab'
 const Employee = () => {
   return (
-    <Stack sx={{flex:"8"}}>
-      <Outlet/>
-    </Stack>
+    <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="2px">
+    <Grid  xs={12} md={4}>
+      <DisplayCards/>
+    </Grid>
+    <Grid  mt="19px" xs={11} md={7.6}  >
+     <Card  ><EmployeeTab/></Card>
+      
+    </Grid>
+  </Grid>
   )
 }
 

@@ -1,30 +1,25 @@
 import {
-  Stack,
+  Grid,
   Typography,
   Button,
   Select,
   MenuItem,
   FormControl,
-  InputLabel,
+  InputLabel,Alert
 } from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
-import TextInput from "../../InputFields/TextInput";
 import SelectInput from "../../InputFields/SelectInput";
-
-import { Link } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
-import * as yup from "yup";
 import DisplayTable from "../../TableContent/DisplayTable";
 import { KpiTableColumns } from "../../TableContent/Tablecolums";
-///parent component
+
 const DisplayKpi = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [roleList, setRoleList] = useState([]);
   const [kpiList, setKpiList] = useState([]);
-  // const {id} = useParams();
-
+  const [noDataFound, setNoDataFound] = useState(false);
+  const [Error, setError] = useState(null);
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
   );
@@ -35,8 +30,6 @@ const DisplayKpi = () => {
     setDepartmentList(data);
   }, [data, isLoading, error]);
 
-  //Fetch value of role on the basis deptId
-
   const handleDepartmentChange = async (e) => {
     const response = await fetch(
       `http://localhost:4000/api/role/getByDept/${e.target.value}`,
@@ -44,10 +37,10 @@ const DisplayKpi = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
       }
     );
-    // console.log(response);
     if (!response.ok) {
       console.log("Network ");
     }
@@ -56,7 +49,7 @@ const DisplayKpi = () => {
     console.log(list);
     setRoleList(list);
   };
-  //on submit
+
   const onSubmit = async (values, { resetForm }) => {
     const response = await fetch(
       `http://localhost:4000/api/kpi/getByRole/${values.role}`,
@@ -64,92 +57,143 @@ const DisplayKpi = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
       }
     );
-    // console.log(response);
     if (!response.ok) {
-      console.log("Network ");
+     setError("Problrm in Fetching data")
     }
     const data = await response.json();
-    const list = data;
-    console.log(list);
-    setKpiList(list);
+
+    console.log("KPI", data);
+    if (data.length === 0) {
+      setKpiList([]);
+      setNoDataFound(true); // set a state variable to true
+    } else {
+      setKpiList(data);
+      setNoDataFound(false); // set a state variable to false
+    }
   };
+  useEffect(() => {
+    if (Error) {
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    }
+  }, [Error]);
 
   return (
-    <Stack
+    <Grid
+      container
       spacing={3}
       sx={{
         paddingTop: "20px",
-        justifyContent: "centre",
+        justifyContent: "center",
         alignItems: "center",
       }}
     >
-      <Typography variant="h4" >
-        View KPI
-      </Typography>
-      <Formik
-        initialValues={{
-          department: "",
-          role: "",
-        }}
-        onSubmit={onSubmit}
-      >
-        {(props) => (
-          <Stack
-            direction="row"
-            component={Form}
-            spacing={2}
-            sx={{ width: "80%", alignSelf: "center" }}
-          >
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Department</InputLabel>
-              <Select
-                value={props.values.department}
-                defaultValue=""
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                error={props.errors.department && props.touched.department}
-                label={
-                  props.errors.department && props.touched.department
-                    ? `${props.department}`
-                    : "department"
-                }
-                onChange={(e) => {
-                  handleDepartmentChange(e);
-                  props.setFieldValue("department", e.target.value);
-                }}
-                MenuProps={{
-                  PaperProps: {
-                    style: {
-                      maxHeight: 200,
-                      overflowY: "auto",
-                    },
-                  },
-                }}
-              >
-                {departmentList?.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <SelectInput departmentList={roleList} name="role" label="role" />
-
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ width: "200px", height: "50px", alignSelf: "center" }}
-            >
-              Get KPI's
-            </Button>
-          </Stack>
-        )}
-      </Formik>
-      {kpiList?.length!==0?<DisplayTable row={kpiList} columns={KpiTableColumns}/>:null}
-    </Stack>
+      <Grid item xs={12}>
+        <Formik
+          initialValues={{
+            department: "",
+            role: "",
+          }}
+          onSubmit={onSubmit}
+        >
+          {(props) => (
+            <Grid component={Form} spacing={2}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} sm={5} md={5}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      Department
+                    </InputLabel>
+                    <Select
+                      value={props.values.department}
+                      defaultValue=""
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      error={
+                        props.errors.department && props.touched.department
+                      }
+                      label={
+                        props.errors.department && props.touched.department
+                          ? `${props.department}`
+                          : "department"
+                      }
+                      onChange={(e) => {
+                        handleDepartmentChange(e);
+                        props.setFieldValue("department", e.target.value);
+                      }}
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                            overflowY: "auto",
+                          },
+                        },
+                      }}
+                    >
+                      {departmentList?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={5} md={5}>
+                  <SelectInput
+                    departmentList={roleList}
+                    name="role"
+                    label="role"
+                  />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    width: "200px",
+                    height: "50px",
+                    alignSelf: "center",
+                    mt: "8px",
+                  }}
+                >
+                  Get KPI's
+                </Button>
+              </Grid>
+              {Error && (
+                <Grid item xs={12}>
+                  <Alert
+                    severity="danger"
+                    duration={2000}
+                    position={{
+                      top: 16,
+                      right: 16,
+                    }}
+                  >
+                    {Error}
+                  </Alert>
+                </Grid>
+              )}
+            </Grid>
+          )}
+        </Formik>
+      </Grid>
+      {noDataFound ? (
+        <Grid item xs={12}>
+          <p>No KPIs assigned to this role</p>
+        </Grid>
+      ) : null}
+      {kpiList?.length !== 0 ? (
+        <Grid item xs={12}>
+          <DisplayTable row={kpiList} columns={KpiTableColumns} />
+        </Grid>
+      ) : null}
+    </Grid>
   );
 };
 

@@ -1,29 +1,28 @@
-import './App.css';
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-import Box from '@mui/material/Box';
-import Navbar from './Components/Navbar';
-import { Stack } from '@mui/material';
-import Sidebar from './Components/Sidebar';
-import Footar from './Components/Footar';
-import {Outlet} from 'react-router-dom'
+import "./App.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import Box from "@mui/material/Box";
+import Navbar from "./Components/Navbar";
+import { Grid, Stack } from "@mui/material";
+import Sidebar from "./Components/Sidebar";
+import { Outlet } from "react-router-dom";
+import Buttombar from "./Components/Buttombar";
+
+
 function App() {
-  
+
   return (
-   <Box sx={{
-    m:"0px",
-    p:"0px",
-    width:"100vw"
-   }} >
-    <Navbar/>
-    <Stack direction="row" spacing={2} >
-      <Sidebar/>
-      <Outlet/>
-    </Stack>
-    <Footar/>
-   </Box>
+    <Box>
+        <Navbar />
+        <Stack direction="row" spacing={0}>
+          <Sidebar />
+          <Outlet />
+        </Stack>
+        <Buttombar />
+    </Box>
+   
   );
 }
 

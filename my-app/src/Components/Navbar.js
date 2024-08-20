@@ -1,111 +1,83 @@
-import {
-  AppBar,
-  styled,
-  Toolbar,
-  Typography,
-  Avatar,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import React, { useState } from "react";
-import TekdiLogo from "./TekdiLogo.png";
-
-import PersonIcon from "@mui/icons-material/Person";
-
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
+import { logo } from "./Constant";
+import { useNavigate } from "react-router-dom";
 const Navbar = () => {
-  const StyleToolbar = styled(Toolbar)({
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  });
-  const Person = styled("div")({
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  });
-  const [open, setOpen] = useState(false);
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const user=window.localStorage.getItem("username")
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+ 
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const navigate =useNavigate() ;
+  const handleLogout = () => {
+    
+    localStorage.removeItem("token");
+    localStorage.removeItem("userData");
+    setAuth(false);
+    navigate("/login", { replace: true }); 
+  };
+  const userData=JSON.parse(window.localStorage.getItem("userData"))
+ 
   return (
-    <AppBar
-      bgcolor="#987D9A"
-      position="sticky"
-      sx={{
-        bgcolor: "white",
-        height: {
-          xs: "75px",
-          sm: "80px",
-        },
-        width: "100%",
-        p: "12px",
-        boxShadow: "none",
-        borderBottom: "1px solid grey",
-      }}
-    >
-      <StyleToolbar>
-        <Typography
-          variant="h6"
-          alignContent="centre"
-          sx={{
-            display: {
-              xs: "none",
-              sm: "block",
-            },
-          }}
-        >
-          <img src={TekdiLogo} height={78} width={90} alt="Tekdi LOGO" />
+    <AppBar position="static" sx={{ height: '45px', bgcolor: "#240750", zIndex: "1" }}>
+      <Toolbar >
+        <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 2 ,mb:2}}>
+          {logo}
+        </IconButton>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          {/* Add a spacer to push the username and avatar to the right */}
+          <Box sx={{ flexGrow: 1 }} />
         </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            display: {
-              xs: "block",
-              sm: "none",
-            },
-          }}
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleMenu}
+          color="inherit"
+          sx={{mb:2}}
         >
-          <img src={TekdiLogo} height={60} width={65} alt="Tekdi LOGO" />
+          <AccountCircle />
+        </IconButton>
+        <Typography variant="body1" component="div" sx={{ mr: 2 ,mb:2}}>
+          {userData?.f_name}
         </Typography>
-        <Person>
-          <Typography
-            variant="h4"
-            sx={{
-              color: "black",
-              m: "10px",
-              fontSize: "15px",
-              display: {
-                xs: "none",
-                sm: "block",
-              },
-            }}
-          >
-            User Name
-          </Typography>
-          <Avatar onClick={(e) => setOpen(true)} sx={{ bgcolor: "#478CCF" }}>
-            <PersonIcon />
-          </Avatar>
-        </Person>
         <Menu
-          id="demo-positioned-menu"
-          aria-labelledby="demo-positioned-button"
-          open={open}
+          id="menu-appbar"
+          anchorEl={anchorEl}
           anchorOrigin={{
             vertical: "top",
             horizontal: "right",
           }}
+          keepMounted
           transformOrigin={{
             vertical: "top",
             horizontal: "right",
           }}
-          sx={{
-            marginTop: "50px",
-          }}
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
         >
-          <MenuItem onClick={(e) => setOpen(false)}>Profile</MenuItem>
-          <MenuItem onClick={(e) => setOpen(false)}>My account</MenuItem>
-          <MenuItem onClick={(e) => setOpen(false)}>Logout</MenuItem>
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
-      </StyleToolbar>
+      </Toolbar>
     </AppBar>
   );
 };
+
 export default Navbar;

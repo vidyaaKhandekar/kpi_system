@@ -1,17 +1,25 @@
-import { Stack, Typography, Button, Select, MenuItem ,FormControl,InputLabel} from "@mui/material";
+import {
+  Grid,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Alert,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
 import TextInput from "../../InputFields/TextInput";
 import SelectInput from "../../InputFields/SelectInput";
-
-import { Link } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
-import * as yup from "yup";
+import { AddEmployeeFormSchema } from "../ValidationSchema";
 ///parent component
 const AddEmployeeForm = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [roleList, setRoleList] = useState([]);
+  const [fieldError, setFieldError] = useState(null);
+  const [Error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
   // const {id} = useParams();
 
   const { data, isLoading, error } = useFetch(
@@ -35,12 +43,13 @@ const AddEmployeeForm = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
       }
     );
     // console.log(response);
     if (!response.ok) {
-      console.log("Network ");
+      setFieldError("Network Error");
     }
     const data = await response.json();
     const list = data;
@@ -51,150 +60,220 @@ const AddEmployeeForm = () => {
   const onSubmit = async (values, { resetForm }) => {
     console.log("Calling submit");
     //name, email, roleId, deptId
-    const name = values.name;
+    const firstName = values.firstName;
+    const lastName = values.lastName;
     const email = values.email;
     const roleId = values.role;
     const deptId = values.department;
     const apprId = values.apprId;
 
     if (apprId === "") {
-      const responce = await fetch("http://localhost:4000/api/emp/add", {
+      fetch("http://localhost:4000/api/emp/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          name: name,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           roleId: roleId,
           deptId: deptId,
         }),
-      });
-      const data = await responce.json();
-      console.log(data);
+      })
+        .then((response) => {
+          if (response.ok) {
+            setSuccess("Successfully added");
+          } else {
+            setError("Error in Adding ");
+          }
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
       resetForm();
     } else {
       const responce = await fetch("http://localhost:4000/api/emp/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
         body: JSON.stringify({
-          name: name,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           roleId: roleId,
           deptId: deptId,
           apprId: apprId,
         }),
-      });
-      const data = await responce.json();
-      console.log(data);
+      })
+        .then((response) => {
+          if (response.ok) {
+            setSuccess("Successfully added");
+          } else {
+            setError("Error in Adding ");
+          }
+        })
+        .catch((error) => {
+          setError(error.message);
+        });
       resetForm();
     }
   };
-  //Yup validation
-  const AddEmployeeFormSchema = yup.object().shape({
-    name: yup.string().required("name is required field"),
-    email: yup
-      .string()
-      .email("Invalid Email")
-      .matches(
-        /@tekditechnologies\.com$/,
-        "Email must end with @tekditechnologies.com"
-      )
-      .required("Email is required"),
-    department: yup.string().required("Department is required field"),
-    role: yup.string().required("Role is departmentrequired"),
-  });
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setSuccess(null);
+      }, 2000);
+    }
+  }, [success]);
+  useEffect(() => {
+    if (Error) {
+      setTimeout(() => {
+        setError(null);
+      }, 2000);
+    }
+  }, [Error]);
 
   return (
-    <>
-      <div
-        style={{ display: "flex", justifyContent: "flex-end", margin: "30px"}}
-      >
-        <Button
-          sx={{ width: "15%", height: "55px" }}
-          component={Link}
-          to="/employee"
-        >
-          <CloseIcon />
-        </Button>
-      </div>
-      <Stack
-        spacing={1}
-        sx={{
-          paddingTop: "20px",
-          justifyContent: "centre",
-          alignItems: "center",
-          
-        }}
-      >
-        <Typography variant="h5" sx={{ alignSelf: "center" }}>
-          Add Employee
-        </Typography>
-        <Formik
-          initialValues={{
-            name: "",
-            email: "",
-            apprId: "",
-            department: "",
-            role: "",
-          }}
-          validationSchema={AddEmployeeFormSchema}
-          onSubmit={onSubmit}
-        >
-          {(props) => (
-            <Stack component={Form} spacing={2} sx={{ width: "60%" }}>
-              <TextInput label="name" name="name" />
-              <TextInput label="email" name="email" />
-              <TextInput label="apprId" name="apprId" />
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Department</InputLabel>
-                <Select
-                  value={props.values.department}
-                  defaultValue=""
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  error={props.errors.department && props.touched.department}
-                  label={
-                    props.errors.department && props.touched.department ? `${props.department}` : "department"
-                  }
-                  onChange={(e) => {
-                    handleDepartmentChange(e);
-                    props.setFieldValue('department', e.target.value);
-                
-                  }}
-                  
-                  MenuProps={{
-                    PaperProps: {
-                      style: {
-                        maxHeight: 200,
-                        overflowY: "auto",
-                      },
-                    },
-                  }}
-                >
-                  {departmentList?.map((item) => (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <SelectInput departmentList={roleList} name="role" label="role" />
+    <Grid
+      container
+      spacing={1}
+      sx={{
+        paddingTop: "20px",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      {success && (
+        <Grid item xs={12}>
+          <Alert
+            severity="success"
+            duration={2000}
+            position={{
+              top: 16,
+              right: 16,
+            }}
+          >
+            {success}
+          </Alert>
+        </Grid>
+      )}
 
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ width: "200px", height: "50px", alignSelf: "center" }}
-              >
-                Add Role
-              </Button>
-            </Stack>
-          )}
-        </Formik>
-      </Stack>
-    </>
+      <Formik
+        initialValues={{
+          firstName: "",
+          lastName: "",
+          email: "",
+          apprId: "",
+          department: "",
+          role: "",
+        }}
+        validationSchema={AddEmployeeFormSchema}
+        onSubmit={onSubmit}
+      >
+        {(props) => (
+          <Grid item xs={12} sm={6} md={8}>
+            <Form>
+              <Grid container spacing={1} sx={{}}>
+                <Grid item xs={11}>
+                  <TextInput label="Enter First Name*" name="firstName" />
+                </Grid>
+                <Grid item xs={11}>
+                  <TextInput label="Enter Last Name" name="lastName" />
+                </Grid>
+                <Grid item xs={11}>
+                  <TextInput label="Enter Email Address*" name="email" />
+                </Grid>
+                <Grid item xs={11}>
+                  <TextInput label="Enter Manager ID" name="apprId" />
+                </Grid>
+                <Grid item xs={11}>
+                  <FormControl fullWidth>
+                    <InputLabel id="demo-simple-select-label">
+                      {props.errors.department && props.touched.department
+                        ? `${props.department}`
+                        : "Select Department*"}
+                    </InputLabel>
+                    <Select
+                      value={props.values.department}
+                      defaultValue=""
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      error={
+                        props.errors.department && props.touched.department
+                      }
+                      label={
+                        props.errors.department && props.touched.department
+                          ? `${props.department}`
+                          : "Select Department*"
+                      }
+                      onChange={(e) => {
+                        handleDepartmentChange(e);
+                        props.setFieldValue("department", e.target.value);
+                      }}
+                      MenuProps={{
+                        PaperProps: {
+                          style: {
+                            maxHeight: 200,
+                            overflowY: "auto",
+                          },
+                        },
+                      }}
+                    >
+                      {departmentList?.map((item) => (
+                        <MenuItem key={item.id} value={item.id}>
+                          {item.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Grid>
+                {error && (
+                  <Grid item xs={11}>
+                    <Alert severity="error">{error}</Alert>
+                  </Grid>
+                )}
+                <Grid item xs={11}>
+                  <SelectInput
+                    departmentList={roleList}
+                    name="role"
+                    label="Select Designation*"
+                  />
+                </Grid>
+                {fieldError && (
+                  <Grid item xs={11}>
+                    <Alert severity="error">{fieldError}</Alert>
+                  </Grid>
+                )}
+                {Error && (
+                  <Grid item xs={11}>
+                    <Alert severity="error">{Error}</Alert>
+                  </Grid>
+                )}
+                <Grid item xs={11}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: "200px",
+                      height: "50px",
+                      alignSelf: "center",
+                      
+                    }}
+                  >
+                    Add Role
+                  </Button>
+                </Grid>
+              </Grid>
+            </Form>
+          </Grid>
+        )}
+      </Formik>
+    </Grid>
   );
 };
 

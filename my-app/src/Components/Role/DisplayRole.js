@@ -1,4 +1,4 @@
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Grid } from "@mui/material";
 import React from "react";
 import SelectInput from "../../InputFields/SelectInput";
 import { Form, Formik } from "formik";
@@ -8,13 +8,10 @@ import { DepartmentSchema } from "../ValidationSchema";
 import DisplayList from "../DisplayList";
 import { deleteRoleUrl } from "../Constant";
 
-
-
-
 const DisplayRole = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const [roleList, setRoleList] = useState([]);
-  const[deptId,setDeptId]=useState();
+  const [deptId, setDeptId] = useState();
   // const[dept,setDept]=useState("");
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
@@ -42,11 +39,11 @@ const DisplayRole = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list=data;
+    const list = data;
     console.log(list);
     setRoleList(list);
   };
-  const fetchData=async(deptId)=>{
+  const fetchData = async (deptId) => {
     const response = await fetch(
       `http://localhost:4000/api/role/getByDept/${deptId}`,
       {
@@ -61,12 +58,10 @@ const DisplayRole = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list=data;
+    const list = data;
     console.log(list);
     setRoleList(list);
-
-}
-
+  };
 
   return (
     <Stack
@@ -77,7 +72,6 @@ const DisplayRole = () => {
         alignItems: "center",
       }}
     >
-   
       <Formik
         initialValues={{
           department: "",
@@ -86,32 +80,46 @@ const DisplayRole = () => {
         onSubmit={onSubmit}
       >
         {(props) => (
-          <Stack
+          <Grid
             direction="row"
             component={Form}
             spacing={2}
             sx={{ width: "80%" }}
           >
-            <SelectInput
-              departmentList={departmentList}
-              name="department"
-              label="department"
-              error={props.errors.department ? true : false}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ width: "200px", height: "56px", alignSelf: "center" }}
+            <Grid>
+              <SelectInput
+                departmentList={departmentList}
+                name="department"
+                label="Select Department"
+              />
+            </Grid>
+
+            <Grid
+              item
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              Get Role
-            </Button>
-          </Stack>
-          
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ width: "200px", height: "50px", mt: "10px" }}
+              >
+                Get Designation
+              </Button>
+            </Grid>
+          </Grid>
         )}
-        
       </Formik>
-        
-        <DisplayList listItem={roleList} fetchData={fetchData} url={deleteRoleUrl} deptId={deptId}/>
+
+      <DisplayList
+        listItem={roleList}
+        fetchData={fetchData}
+        url={deleteRoleUrl}
+        deptId={deptId}
+      />
     </Stack>
   );
 };

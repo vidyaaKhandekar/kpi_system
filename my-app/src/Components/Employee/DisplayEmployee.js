@@ -40,7 +40,7 @@ const DisplayEmployee = () => {
     }
     const data = await response.json();
     const list=data;
-   
+    console.log(list);
     setEmployee(list);
     const response2 = await fetch(
       `http://localhost:4000/api/role/getByDept/${deptId}`,
@@ -48,6 +48,7 @@ const DisplayEmployee = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          authorization: window.localStorage.getItem("token"),
         },
       }
     );
@@ -56,12 +57,18 @@ const DisplayEmployee = () => {
       console.log("Network ");
     }
     const data2 = await response2.json();
-    const list2 = data2.roles;
+    const list2 = data2;
     console.log(list2,"roles");
     setRole(list2);
   };
   
-
+  if(Employee){
+    Employee.map((obj, index) => {
+      obj.name = `${obj.f_name} ${obj.l_name}`;
+      return obj;
+    });
+    console.log(Employee)
+  }
 
   return (
     <Stack
@@ -91,7 +98,7 @@ const DisplayEmployee = () => {
             <SelectInput
               departmentList={departmentList}
               name="department"
-              label="department"
+              label="Select Department"
               error={props.errors.department ? true : false}
             />
             <Button
@@ -106,7 +113,7 @@ const DisplayEmployee = () => {
         )}
         
       </Formik>
-     
+    
         
       {Employee?.length!==0 ? <DisplayTable row={Employee} columns={EmployeeTableColumns}/>:null }
     </Stack>

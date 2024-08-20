@@ -8,7 +8,7 @@ const LoginOptions = () => {
         alignItems:"center"
     }}>
     
-    <Button variant="contained" sx={{
+    <Button variant="contained" component={Link} to='admin'  sx={{
         width:"80%",
         height:"50px"
     }}>Login As Admin</Button>

@@ -1,4 +1,4 @@
-import { Stack, Typography, Button } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
@@ -38,58 +38,55 @@ const AddRoleForm = () => {
   };
 
   return (
-    <>
-      <div
-        style={{ display: "flex", justifyContent: "flex-end", margin: "30px" }}
-      >
-        <Button
-          sx={{ width: "15%", height: "55px" }}
-          component={Link}
-          to="/role"
-        >
-          <CloseIcon />
-        </Button>
-      </div>
-      <Stack
-        spacing={3}
-        sx={{
-          paddingTop: "50px",
-          justifyContent: "centre",
-          alignItems: "center",
-        }}
-      >
-        <Typography variant="h4" sx={{ alignSelf: "center" }}>
-          ADD ROLE
-        </Typography>
-        <Formik
-          initialValues={{
-            department: "",
-            role: "",
+    <Formik
+      initialValues={{
+        department: "",
+        role: "",
+      }}
+      validationSchema={AddRoleformSchema}
+      onSubmit={onSubmit}
+    >
+      {(props) => (
+        <Grid
+          spacing={3}
+          component={Form}
+          sx={{
+            width: "80%",
+            height: "300px",
+            justifyContent: "center",
+            alignItems: "centre",
           }}
-          validationSchema={AddRoleformSchema}
-          onSubmit={onSubmit}
         >
-          {(props) => (
-            <Stack component={Form} spacing={2} sx={{ width: "60%" }}>
-              <SelectInput
-                departmentList={departmentList}
-                name="department"
-                label="department"
-              />
-              <TextInput label="role" name="role" />
+          <Grid xs={11}>
+            <SelectInput
+              departmentList={departmentList}
+              name="department"
+              label="Select Department"
+            />
+          </Grid>
+          <Grid xs={11}>
+            <TextInput label="Enter Designation" name="role" />
+          </Grid>
 
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ width: "200px", height: "50px", alignSelf: "center" }}
-              >
-                Add Role
-              </Button>
-            </Stack>
-          )}
-        </Formik>
-      </Stack>
-    </>
+          <Grid
+            item
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ width: "200px", height: "50px",mt:'10px',bgcolor:'#240750' }}
+            >
+              Add Designation
+            </Button>
+          </Grid>
+        </Grid>
+      )}
+    </Formik>
   );
 };
 

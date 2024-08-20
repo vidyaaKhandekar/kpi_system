@@ -13,8 +13,9 @@ const SelectInput = ({ departmentList, label, name, ...props }) => {
 
     return (
         <FormControl fullWidth>
-            <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+            <InputLabel id="demo-simple-select-label" >{field.error&&field.touched ?`${field.error}`:`${label}`}</InputLabel>
             <Select
+            
                {...props} {...meta}
                 defaultValue=""
                 labelId="demo-simple-select-label"

@@ -7,7 +7,7 @@ const loginWithGoogle =()=>{
 }
 const LoginWithGoogle = () => {
   return (
-    <Stack sx={{
+    <Stack sx={{ 
         justifyContent:"centre",
         alignItems:"center",
         height:"100%",

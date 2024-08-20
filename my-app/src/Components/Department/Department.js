@@ -1,34 +1,25 @@
-import React from 'react'
-import AddDepartment from './AddDepartment'
-import { Stack } from '@mui/material'
-import  { useEffect, useState } from 'react'
-import DisplayList from '../DisplayList';
-import { deleteDepartmentUrl } from '../Constant';
-const Department=()=> {
-    const[DepartmentList,setDepartmentList]=useState([]);
-    const fetchData=async()=>{
-      
-      const data=await fetch('http://localhost:4000/api/dept/getAll');
-      console.log("Responce: ",data);
-      const deptList=await data.json();
-      console.log("List: ", deptList);
-      setDepartmentList(deptList);
-
-}
-    useEffect(()=>{
-        fetchData();
-    },[])
-    
-
-    console.log(DepartmentList);
+import React from "react";
+import AddDepartment from "./AddDepartment";
+import { Grid, Stack } from "@mui/material";
+import { useEffect, useState } from "react";
+import Card from '@mui/material/Card';
+import DisplayList from "../DisplayList";
+import { deleteDepartmentUrl } from "../Constant";
+import DepartmentTab from "./DepartmentTab";
+import DisplayCards from "../DisplayCards";
+const Department = () => {
+  
   return (
-    <Stack flex={8}>
-        <AddDepartment fetchData={fetchData}/>
+    <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="2px">
+      <Grid  xs={12} md={4}>
+        <DisplayCards/>
+      </Grid>
+      <Grid  mt="19px" xs={11} md={7.6}  >
+       <Card  ><DepartmentTab/></Card>
         
-        <DisplayList  listItem={DepartmentList} fetchData={fetchData}url={deleteDepartmentUrl}/>
-    </Stack>
-    
-  )
-}
+      </Grid>
+    </Grid>
+  );
+};
 
-export default Department
+export default Department;
