@@ -10,9 +10,13 @@ import LoginWithGoogle from "../Components/LoginPage/LoginWithGoogle";
 import Dashboard from "../Components/Dashboard";
 import LoginAsAdmin from "../Components/LoginPage/LoginAsAdmin";
 import ProtectedRoute from "./ProtectedRoute";
+import Employees from "../EmployeeComponents/Employee";
+import Team from "../EmployeeComponents/Team";
+import EmployeeTab from "../EmployeeComponents/EmployeeTab";
 // component imports
 
 const Router = createBrowserRouter(
+  
   createRoutesFromElements(
     <>
       <Route path="/login" element={<Login />}>
@@ -20,7 +24,7 @@ const Router = createBrowserRouter(
         <Route path="employee" element={<LoginWithGoogle />} />
         <Route path="admin" element={<LoginAsAdmin />} />
       </Route>
-      <Route element={<ProtectedRoute/>}>
+      <Route element={<ProtectedRoute />}>
         <Route path="/" element={<App />}>
           <Route index element={<Department />} />
           <Route path="department" element={<Department />} />
@@ -28,9 +32,14 @@ const Router = createBrowserRouter(
           <Route path="role" element={<Role />}></Route>
           <Route path="Kpi" element={<Kpi />}></Route>
         </Route>
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />}>
+          <Route index element={<EmployeeTab />} /> 
+          <Route path="employee" element={<EmployeeTab />}></Route>
+          <Route path="team" element={<Team />}></Route>
+        </Route>
       </Route>
     </>
   )
-);
+  
+)
 export default Router;
