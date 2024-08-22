@@ -7,7 +7,8 @@ import WebAssetIcon from "@mui/icons-material/WebAsset";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
-export default function Buttombar() {
+
+export default function Buttombar({list}) {
   const [value, setValue] = React.useState("recents");
 
   const handleChange = (event, newValue) => {
@@ -27,7 +28,7 @@ export default function Buttombar() {
       sx={{
         width: "100%",
         display: { sm: "flex", md: "none" },
-        position: "fixed",
+        position: "sticky",
         bottom: 0,
         left: 0,
         right: 0,
@@ -38,36 +39,17 @@ export default function Buttombar() {
       value={value}
       onChange={handleChange}
     >
-      <StyledBottomNavigationAction
-        label="Employee"
-        value="Employee"
-        component={Link}
-        to="employee"
-        icon={<PeopleAltIcon />}
-      />
-      <StyledBottomNavigationAction
-  
-        label="Department"
-        value="Department"
-        component={Link}
-        to="department"
-        icon={<WebAssetIcon />}
-      />
+      {list.map((item, index) => (
+          <StyledBottomNavigationAction
+          key={index}
+          label={item.label}
+          value={item.label}
+          component={Link}
+          to={item.to}
+          icon={item.icon}
+        />
+        ))}
       
-      <StyledBottomNavigationAction
-        label="Role"
-        value="Role"
-        component={Link}
-        to="role"
-        icon={<WysiwygIcon />}
-      />
-      <StyledBottomNavigationAction
-        label="KPI"
-        value="KPI"
-        component={Link}
-        to="kpi"
-        icon={<ListAltIcon />}
-      />
     </BottomNavigation>
   );
 }

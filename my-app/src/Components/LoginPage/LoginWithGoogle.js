@@ -1,11 +1,33 @@
 import { Button,Stack,Typography } from "@mui/material";
-import React from "react";
+import React,{useState} from "react";
+import axios from "axios";
 
 
-const loginWithGoogle =()=>{
-    window.open("http://localhost:4000/auth/google/callback", "_self")
-}
+
 const LoginWithGoogle = () => {
+  const loginWithGoogle1 =()=>{
+    window.open("http://localhost:4000/auth/google/callback", "_self")
+    getUser();
+}
+  const [userData, setUserData] = useState({});
+  console.log("Responce: ", userData);
+  const getUser = async () => {
+    try {
+      const responce = await axios.get(
+        "http://localhost:4000/auth/login/success",
+        {
+          withCredentials: true,
+        }
+      );
+
+      setUserData(responce.data.user);
+      localStorage.setItem("userData", JSON.stringify(responce.data.user));
+      localStorage.setItem("user","yes")
+      localStorage.setItem("userProfile","Employee")
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
   return (
     <Stack sx={{ 
         justifyContent:"centre",
@@ -22,7 +44,7 @@ const LoginWithGoogle = () => {
           border: "1px solid grey",
           marginTop:"400px"
         }}
-        onClick={loginWithGoogle}
+        onClick={loginWithGoogle1}
       >
         <img
           src="https://cdn.kekastatic.net/login/v/M180_2024.07.11.1/images/logos/google.svg"

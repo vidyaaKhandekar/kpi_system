@@ -27,6 +27,7 @@ const AddRoleForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization: window.localStorage.getItem("token"),
       },
       body: JSON.stringify({ name: role, deptId: dept }),
     });

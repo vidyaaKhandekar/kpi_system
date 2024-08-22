@@ -29,13 +29,16 @@ const Navbar = () => {
     
     localStorage.removeItem("token");
     localStorage.removeItem("userData");
+    localStorage.removeItem("username");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userProfile");
     setAuth(false);
     navigate("/login", { replace: true }); 
   };
   const userData=JSON.parse(window.localStorage.getItem("userData"))
  
   return (
-    <AppBar position="static" sx={{ height: '45px', bgcolor: "#240750", zIndex: "1" }}>
+    <AppBar  sx={{ height: '45px', bgcolor: "#240750",position:'Sticky' }}>
       <Toolbar >
         <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 2 ,mb:2}}>
           {logo}

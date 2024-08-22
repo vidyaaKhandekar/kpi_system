@@ -5,7 +5,7 @@ import Card from '@mui/material/Card'
 import EmployeeTab from './EmployeeTab'
 const Employee = () => {
   return (
-    <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="2px">
+    <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="10px">
     <Grid  xs={12} md={4}>
       <DisplayCards/>
     </Grid>

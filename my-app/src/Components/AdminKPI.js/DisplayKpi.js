@@ -62,7 +62,7 @@ const DisplayKpi = () => {
       }
     );
     if (!response.ok) {
-     setError("Problrm in Fetching data")
+     setError("Problem in Fetching data")
     }
     const data = await response.json();
 

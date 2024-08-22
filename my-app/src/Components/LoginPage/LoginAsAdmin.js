@@ -26,6 +26,8 @@ const LoginAsAdmin = () => {
         if (data.token) {
          localStorage.setItem('token', data.token);
          localStorage.setItem('username',data.username)
+         localStorage.setItem('user',"yes")
+         localStorage.setItem("userProfile","Admin")
           window.location.href = "/";
         } else {
           setError(data.message);

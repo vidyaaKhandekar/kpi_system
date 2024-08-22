@@ -13,6 +13,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Employees from "../EmployeeComponents/Employee";
 import Team from "../EmployeeComponents/Team";
 import EmployeeTab from "../EmployeeComponents/EmployeeTab";
+import Test from "../test";
 // component imports
 
 const Router = createBrowserRouter(
@@ -38,6 +39,7 @@ const Router = createBrowserRouter(
           <Route path="team" element={<Team />}></Route>
         </Route>
       </Route>
+      {/* <Route path="/" element={<Test />}></Route> */}
     </>
   )
   
