@@ -1,8 +1,5 @@
-import { Box, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import React from "react";
-
-import EmployeePieChart from "../Cards/EmployeePieChart";
-import OverviewCard from "../Cards/OverviewCard";
 import KpiHistoryLineChart from "./KpiHistoryLineChart";
 import CurrentMonthCalendar from "./CurrentMonthCalendar";
 

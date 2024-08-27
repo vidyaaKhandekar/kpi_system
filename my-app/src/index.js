@@ -9,7 +9,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#240750',
+      main: '#33186B',
       hover: '#2C4E80',
     },
   },

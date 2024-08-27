@@ -5,7 +5,7 @@ import WysiwygIcon from "@mui/icons-material/Wysiwyg";
 import WebAssetIcon from "@mui/icons-material/WebAsset";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import TekdiLogo from "./TekdiLogo.png";
-import { Link } from "react-router-dom";
+
 
 const commonSx = {
   margin: "10px",
@@ -19,7 +19,7 @@ export const EmplList = [
   },
   {
     icon: <GroupsIcon sx={commonSx} />,
-    text: "Team",
+    text: "approvar",
   },
 ];
 
@@ -99,8 +99,8 @@ export const EmployeeBottomBar = [
     icon: <DashboardIcon />,
   },
   {
-    label: "Team",
-    to: "team",
+    label: "approvar",
+    to: "approvar",
     icon: <GroupsIcon />,
   },
 ];

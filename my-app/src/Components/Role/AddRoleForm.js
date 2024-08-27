@@ -5,8 +5,7 @@ import useFetch from "../../CustomHook/useFetch";
 import TextInput from "../../InputFields/TextInput";
 import SelectInput from "../../InputFields/SelectInput";
 import { AddRoleformSchema } from "../ValidationSchema";
-import { Link } from "react-router-dom";
-import CloseIcon from "@mui/icons-material/Close";
+
 const AddRoleForm = () => {
   const [departmentList, setDepartmentList] = useState([]);
   const { data, isLoading, error } = useFetch(

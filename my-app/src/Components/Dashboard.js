@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import Box from "@mui/material/Box";
 import Navbar from "./Navbar";
 import { Stack } from "@mui/material";

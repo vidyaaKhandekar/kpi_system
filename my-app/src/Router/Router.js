@@ -11,9 +11,10 @@ import Dashboard from "../Components/Dashboard";
 import LoginAsAdmin from "../Components/LoginPage/LoginAsAdmin";
 import ProtectedRoute from "./ProtectedRoute";
 import Employees from "../EmployeeComponents/Employee";
-import Team from "../EmployeeComponents/Team";
+
 import EmployeeTab from "../EmployeeComponents/EmployeeTab";
 import Test from "../test";
+import Approvar from "../Approvar/ApprovarDashboard";
 // component imports
 
 const Router = createBrowserRouter(
@@ -36,7 +37,7 @@ const Router = createBrowserRouter(
         <Route path="dashboard" element={<Dashboard />}>
           <Route index element={<EmployeeTab />} /> 
           <Route path="employee" element={<EmployeeTab />}></Route>
-          <Route path="team" element={<Team />}></Route>
+          <Route path="approvar" element={<Approvar />}></Route>
         </Route>
       </Route>
       {/* <Route path="/" element={<Test />}></Route> */}

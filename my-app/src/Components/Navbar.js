@@ -38,7 +38,7 @@ const Navbar = () => {
   const userData=JSON.parse(window.localStorage.getItem("userData"))
  
   return (
-    <AppBar  sx={{ height: '45px', bgcolor: "#240750",position:'Sticky' }}>
+    <AppBar  sx={{ height: '45px',position:'Sticky' }}>
       <Toolbar >
         <IconButton edge="start" color="inherit" aria-label="logo" sx={{ mr: 2 ,mb:2}}>
           {logo}

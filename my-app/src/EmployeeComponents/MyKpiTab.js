@@ -4,7 +4,6 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import DisplayMyKpi from "./DisplayMyKpi";
-import FillKpi from "./FillKpi";
 import useFetchKpi from "../CustomHook/useFetchKpi";
 import FillKpiTab from "./FillKpiTab";
 
@@ -40,9 +39,7 @@ function a11yProps(index) {
 export default function MyKpiTab() {
   ///KPIs for that employee
   const userData = JSON.parse(localStorage.getItem("userData"));
-
   const emp_id = userData.id;
-  console.log(emp_id);
   const { kpiList, noDataFound, error } = useFetchKpi(emp_id);
 
   ///fetch data
@@ -69,11 +66,11 @@ export default function MyKpiTab() {
             justifyContent: "center",
             alignItem: "centre",
             "& .MuiTab-root.Mui-selected": {
-              backgroundColor: "#FFC6C6",
+              backgroundColor: "#F2AFEF",
               color: "black",
             },
             "& .MuiTabs-indicator": {
-              backgroundColor: "transparent", // remove bottom border color
+              backgroundColor: "transparent", 
             },
           }}
         >

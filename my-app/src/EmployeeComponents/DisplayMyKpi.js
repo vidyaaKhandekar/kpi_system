@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import useFetchKpi from '../CustomHook/useFetchKpi'
+import React from 'react'
 import DisplayTable from '../TableContent/DisplayTable';
 import { KpiTableColumns } from '../TableContent/Tablecolums';
 

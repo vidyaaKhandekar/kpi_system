@@ -1,13 +1,5 @@
 import React, { useState,useEffect } from "react";
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  Paper,
-  Snackbar,Alert
-} from "@mui/material";
+import {List,ListItem,ListItemIcon,ListItemText,IconButton,Paper,Alert} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const DisplayList = ({ listItem, fetchData, url, deptId }) => {

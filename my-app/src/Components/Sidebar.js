@@ -1,13 +1,4 @@
-import {
-  Box,
-  List,
-  ListItemIcon,
-  ListItemButton,
-  ListItem,
-  ListItemText,
-  styled,
-} from "@mui/material";
-import { AdminList } from "./Constant";
+import {Box,List,ListItemIcon,ListItemButton,ListItem,styled,} from "@mui/material";
 import { Link } from "react-router-dom";
 const Sidebar = ({ list }) => {
   const StyledListItem = styled(ListItem)({
@@ -21,7 +12,6 @@ const Sidebar = ({ list }) => {
 
     <Box
     
-      bgcolor="#240750"
       p={0}
       m={0}
       sx={{
@@ -32,7 +22,7 @@ const Sidebar = ({ list }) => {
         zIndex: "1",
       }}
     >
-     <Box position='fixed' bgcolor="#240750"
+     <Box position='fixed' bgcolor="primary.main"
       p={0}
       m={0}sx={{
         color: "white",

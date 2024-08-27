@@ -1,10 +1,6 @@
 import * as React from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-import WysiwygIcon from "@mui/icons-material/Wysiwyg";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
-import ListAltIcon from "@mui/icons-material/ListAlt";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
 
@@ -34,7 +30,7 @@ export default function Buttombar({list}) {
         right: 0,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#240750",
+        backgroundColor: "primary.main",
       }}
       value={value}
       onChange={handleChange}

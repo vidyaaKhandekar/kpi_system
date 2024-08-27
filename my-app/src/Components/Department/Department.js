@@ -1,10 +1,6 @@
 import React from "react";
-import AddDepartment from "./AddDepartment";
-import { Grid, Stack } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 import Card from '@mui/material/Card';
-import DisplayList from "../DisplayList";
-import { deleteDepartmentUrl } from "../Constant";
 import DepartmentTab from "./DepartmentTab";
 import DisplayCards from "../DisplayCards";
 const Department = () => {
