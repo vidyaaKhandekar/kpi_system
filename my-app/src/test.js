@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import { useFormik } from "formik";
 import {
   Button,
@@ -15,11 +15,12 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Preview from "./EmployeeComponents/Preview";
 
 
-const Test = ({ emp_id, rows, startDate, endDate, aggrigate, onKPISubmit }) => {
+const Test = ({ emp_id, rows, startDate, endDate, aggrigate, onKPISubmit,status }) => {
   const rowsWithAggregate = rows.map((row, index) => ({
     ...row,
     aggregate: aggrigate[index]?.aggr,
   }));
+  const [flag,setFlag]=useState(false)
   const Submit = async (values) => {
     console.log("rows", rowsWithAggregate);
     console.log("agg", aggrigate);
@@ -59,7 +60,11 @@ const Test = ({ emp_id, rows, startDate, endDate, aggrigate, onKPISubmit }) => {
       Submit(values.rows);
     },
   });
-
+ useEffect(()=>{
+  if(status==='requested'){
+    setFlag(true)
+  }
+ })
   return (
     <form onSubmit={formik.handleSubmit}>
       <TableContainer sx={{ overflowX: "auto" }}>
@@ -111,6 +116,7 @@ const Test = ({ emp_id, rows, startDate, endDate, aggrigate, onKPISubmit }) => {
                         e.target.value
                       );
                     }}
+                    multiline
                   />
                 </TableCell>
                 <TableCell>{row.aggregate}</TableCell>
@@ -119,7 +125,7 @@ const Test = ({ emp_id, rows, startDate, endDate, aggrigate, onKPISubmit }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button variant="contained" type="submit" sx={{ mt: "10px", mb: "20px" }}>
+      <Button variant="contained" type="submit" sx={{ mt: "10px", mb: "20px" }} disabled={flag}>
         Submit
       </Button>
       <Preview />

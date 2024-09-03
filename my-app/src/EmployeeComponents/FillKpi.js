@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Test from "../test";
 import { Typography } from "@mui/material";
+import AdditionalInfo from "../Approvar/AdditionalInfo";
 const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
   // Creating array of { KPIid: 1, KPI_Description: '',Max_Score:'', Score: '', Comment: '' },
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -9,7 +10,7 @@ const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
   const [noDataFound, setNoDataFound] = useState(false);
   const [error, setError] = useState(null);
   const fetchData = async () => {
-    console.log(status,"agge")
+
     try {
       const response = await fetch(
         `http://localhost:4000/api/kpiScore/getByWeek/${emp_id}/${week.sd}/${week.ed}`,
@@ -25,8 +26,7 @@ const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
         return;
       }
       const data = await response.json();
-      console.log("response",data);
-
+   
       if (data.length === 0) {
         setWeekData([]);
         setNoDataFound(true);
@@ -41,7 +41,7 @@ const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
   useEffect(() => {
 
     fetchData();
-    
+    console.log(status,"status is")
   }, []);
 
   const rows = weekData?.map((obj, index) => ({
@@ -59,9 +59,12 @@ const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
     <>
       {noDataFound ? <p>No KPIs assigned to this role</p> : null}
       {error ? <p>OOOps Some Error</p> : null}
-
-      <Typography variant="body1" align="center">
-        {`${week.sd} - ${week.ed}`}
+      {console.log(week,"week")}
+      <Typography variant="body1" align="center"sx={{ fontSize: "14px" ,fontWeight:'bold',mt:'5px' }}>
+        {`${week.sd_date } ${week.sd_month }- ${week.ed_date} ${week.ed_month}`}
+      </Typography>
+      <Typography variant="body1" align="center" sx={{ fontSize: "14px" ,fontWeight:'bold', }}>
+        {`${week.sd_year }`}
       </Typography>
       {rows ? (
         
@@ -70,10 +73,12 @@ const FillKpi = ({ week,onKPISubmit,aggrigate ,status}) => {
           rows={rows}
           startDate={week.sd}
           endDate={week.ed}
-          aggrigate={aggrigate}
+          aggrigate={aggrigate.aggregates}
           onKPISubmit={onKPISubmit}
+          status={status}
         />
       ) : null}
+     
 
     </>
   );

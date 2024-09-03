@@ -48,6 +48,7 @@ const AddRoleForm = () => {
     >
       {(props) => (
         <Grid
+        container
           spacing={3}
           component={Form}
           sx={{

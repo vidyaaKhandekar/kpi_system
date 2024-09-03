@@ -22,8 +22,7 @@ const PieCharts = () => {
   
     const Data = list?.map((obj, index) => ({ id: index + 1, value: obj.employeecount,label: obj.name }));
     const label=list?.map((obj, index) => ({ label: obj.name }));
-    console.log(Data, "data");
-  
+    
     return (
     
         <PieChart

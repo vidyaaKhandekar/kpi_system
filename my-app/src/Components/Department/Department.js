@@ -11,7 +11,7 @@ const Department = () => {
         <DisplayCards/>
       </Grid>
       <Grid  mt="19px" xs={11} md={7.6}  >
-       <Card  ><DepartmentTab/></Card>
+       <Card><DepartmentTab/></Card>
         
       </Grid>
     </Grid>

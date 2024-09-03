@@ -1,6 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import {styled,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,} from "@mui/material";
+import {
+  styled,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import AdditionalInfo from "../Approvar/AdditionalInfo";
 const StyledTableContainer = styled(TableContainer)`
   height: 500px; /* set the height of the table container */
   overflow-y: auto; /* make the table body scrollable */
@@ -35,7 +45,38 @@ const PreviewTable = () => {
   const [noDataFound, setNoDataFound] = useState(false);
   const [error, setError] = useState(null);
   const [aggrigate, setAggrigate] = useState();
-  const fetchData = async () => {
+  const fetchCurrentData = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/kpiScore/getCurrentMonthKpiScores/${emp_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        setError("Problem in Fetching data");
+        return;
+      }
+      const data = await response.json();
+      console.log("current week data", data);
+
+      if (data.length === 0) {
+        setWeekData([]);
+        setNoDataFound(true);
+      } else {
+        setWeekData(data.Scores);
+        setWeek(data.Ranges);
+        setNoDataFound(false);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  ///fetch previous week data
+  const fetchPreviousData = async () => {
     try {
       const response = await fetch(
         `http://localhost:4000/api/kpiScore/getPreviousMonthKpiScores/${emp_id}`,
@@ -51,8 +92,8 @@ const PreviewTable = () => {
         return;
       }
       const data = await response.json();
-      console.log("previwe data", data.Scores);
-     
+      console.log("previous week data data", data.Scores);
+
       if (data.length === 0) {
         setWeekData([]);
         setNoDataFound(true);
@@ -66,7 +107,40 @@ const PreviewTable = () => {
     }
   };
   //fetch  aggrigates
-  const fetchAggrigate = async () => {
+  const [aggrigateData, setAggrigateData] = useState();
+  const fetchCurrentAggrigate = async () => {
+    try {
+      const response = await fetch(
+        ` http://localhost:4000/api/kpiScore/getCurrentAggregates/${emp_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        setError("Problem in Fetching data");
+        return;
+      }
+      const data = await response.json();
+      console.log("current week aggrigate", data);
+
+      if (data.length === 0) {
+        setAggrigate([]);
+        setNoDataFound(true);
+      } else {
+        setAggrigate(data.aggregates);
+        setAggrigateData(data);
+
+        setNoDataFound(false);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  ///fetch  previous week aggrigate
+  const fetchPreviousAggrigate = async () => {
     try {
       const response = await fetch(
         ` http://localhost:4000/api/kpiScore/getPreviousAggregates/${emp_id}`,
@@ -89,6 +163,7 @@ const PreviewTable = () => {
         setNoDataFound(true);
       } else {
         setAggrigate(data.aggregates);
+        setAggrigateData(data);
 
         setNoDataFound(false);
       }
@@ -107,7 +182,37 @@ const PreviewTable = () => {
   });
   //fetch totals
   const [totals, setTotals] = useState();
-  const fetchTotal = async () => {
+  const fetchCurrentTotal = async () => {
+    try {
+      const response = await fetch(
+        ` http://localhost:4000/api/kpiScore/getCurrentTotals/${emp_id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        setError("Problem in Fetching data");
+        return;
+      }
+      const data = await response.json();
+      console.log("current week totals", data);
+
+      if (data.length === 0) {
+        setTotals([]);
+        setNoDataFound(true);
+      } else {
+        setTotals(data);
+
+        setNoDataFound(false);
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+  const fetchPreviousTotal = async () => {
     try {
       const response = await fetch(
         ` http://localhost:4000/api/kpiScore/getPreviousTotals/${emp_id}`,
@@ -138,9 +243,19 @@ const PreviewTable = () => {
     }
   };
   useEffect(() => {
-    fetchData();
-    fetchAggrigate();
-    fetchTotal();
+    const currentDate = new Date();
+    const dayOfMonth = currentDate.getDate();
+    if (dayOfMonth > 20) {
+      fetchPreviousData()
+      fetchPreviousAggrigate()
+      fetchPreviousTotal()
+
+    } else {
+      fetchCurrentAggrigate()
+      fetchCurrentData()
+      fetchCurrentTotal()
+    }
+    
   }, []);
 
   useEffect(() => {
@@ -154,7 +269,7 @@ const PreviewTable = () => {
   return (
     <>
       {weekData && aggrigate ? (
-        <form onSubmit={formik.handleSubmit} sx={{height:'300px'}}>
+        <form onSubmit={formik.handleSubmit}>
           <StyledTableContainer>
             <Table>
               <StyledTableHead sx={{ bgcolor: "white" }}>
@@ -162,7 +277,7 @@ const PreviewTable = () => {
                   <StyledTableCell>ID</StyledTableCell>
                   <StyledTableCell>Description</StyledTableCell>
                   <StyledTableCell>Max Weight</StyledTableCell>
-                  {weeks.map((week, index) => (
+                  {weeks?.map((week, index) => (
                     <StyledTableCell
                       key={week.end_date}
                       colSpan={2}
@@ -179,13 +294,13 @@ const PreviewTable = () => {
                   <StyledTableCell />
                   <StyledTableCell />
                   <StyledTableCell />
-                  {weeks.map((week) => (
+                  {weeks?.map((week) => (
                     <React.Fragment key={week.start_date}>
                       <StyledTableCell>Score</StyledTableCell>
                       <StyledTableCell>Comment</StyledTableCell>
                     </React.Fragment>
                   ))}
-                   <StyledTableCell />
+                  <StyledTableCell />
                 </TableRow>
               </StyledTableHead>
               <TableBody>
@@ -209,8 +324,8 @@ const PreviewTable = () => {
                 ))}
               </TableBody>
               <TableRow>
-              <StyledTableCell />
-                <StyledTableCell sx={{ textAlign: "center" }} colSpan={2} >
+                <StyledTableCell />
+                <StyledTableCell sx={{ textAlign: "center" }} colSpan={2}>
                   TOTALS
                 </StyledTableCell>
                 {totals?.map((item, index) => (
@@ -222,10 +337,16 @@ const PreviewTable = () => {
                     {item.total}
                   </StyledTableCell>
                 ))}
+                <StyledTableCell sx={{ textAlign: "center" }} colSpan={1}>
+                  {aggrigateData?.totalAchieved}/{aggrigateData?.totalPossible}
+                </StyledTableCell>
               </TableRow>
             </Table>
           </StyledTableContainer>
-          <button type="submit">Submit</button>
+          <AdditionalInfo
+            kpiAchieved={aggrigateData?.percentage.toFixed(2)}
+            outOfTen={aggrigateData?.outOf10.toFixed(2)}
+          />
         </form>
       ) : null}
     </>
@@ -233,38 +354,3 @@ const PreviewTable = () => {
 };
 
 export default PreviewTable;
-// {row?.Ranges?.map((week, weekIndex) => (
-//     <React.Fragment key={week.start_date}>
-//       <StyledTableCell>
-//         <Slider
-//           defaultValue={week.score}
-//           sx={{ height: 5 }}
-//           valueLabelDisplay="auto"
-//           shiftStep={2}
-//           step={row.weight}
-//           marks
-//           min={0}
-//           max={row.weight}
-//           onChange={(e) => {
-//             formik.setFieldValue(
-//               `rows.${rowIndex}.Ranges.${weekIndex}.score`,
-//               e.target.value
-//             );
-//           }}
-//         />
-//       </StyledTableCell>
-//       <StyledTableCell>
-//         <Input
-//           type="text"
-//           value={row.Comment}
-//           sx={{ width: "100%" }}
-//           onChange={(e) => {
-//             formik.setFieldValue(
-//               `rows.${rowIndex}.Ranges.${weekIndex}.comment`,
-//               e.target.value
-//             );
-//           }}
-//         />
-//       </StyledTableCell>
-//     </React.Fragment>
-//   ))}

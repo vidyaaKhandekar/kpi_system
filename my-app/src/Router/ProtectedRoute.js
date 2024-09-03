@@ -3,8 +3,8 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
  
-  const user=localStorage.getItem('user');
-  return user==="yes" ? <Outlet/>:<Navigate to='/login'/>
+  const user=localStorage.getItem('userProfile');
+  return user==="Employee"|| user==="Admin" ? <Outlet/>:<Navigate to='/login'/>
 }
  
 export default ProtectedRoute;

@@ -50,6 +50,16 @@ export const logo = (
     style={{ backgroundColor: "white", borderRadius: "5px" }}
   />
 );
+export const LoginLogo =  (
+  <img
+    src={TekdiLogo}
+    height={60}
+    width={60}
+    alt="Tekdi LOGO"
+    style={{ backgroundColor: "primary", borderRadius: "5px" }}
+    
+  />
+);
 
 export const commonList = [
   {

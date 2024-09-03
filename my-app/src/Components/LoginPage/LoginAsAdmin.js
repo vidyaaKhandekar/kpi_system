@@ -26,7 +26,6 @@ const LoginAsAdmin = () => {
         if (data.token) {
          localStorage.setItem('token', data.token);
          localStorage.setItem('username',data.username)
-         localStorage.setItem('user',"yes")
          localStorage.setItem("userProfile","Admin")
           window.location.href = "/";
         } else {
@@ -51,17 +50,17 @@ const LoginAsAdmin = () => {
           spacing={3}
           component={Form}
           sx={{
-            width: "80%",
+            width: "100%",
             height: "300px",
             justifyContent: "center",
             alignItems: "centre",
           }}
         >
           <Grid xs={11}>
-            <TextInput type="text" label="Enter Username" name="username" />
+            <TextInput type="text" label="Enter Username" name="username" sx={{width:'300px' , mb:'20px',}} id="standard-basic" variant="standard" />
           </Grid>
           <Grid xs={11}>
-            <TextInput type="password" label="Enter Password" name="password" />
+            <TextInput type="password" label="Enter Password" name="password" sx={{width:'300px'}}  id="standard-basic" variant="standard"  />
           </Grid>
 
           {error && (
@@ -70,7 +69,6 @@ const LoginAsAdmin = () => {
             </Grid>
           )}
 
-          
           <Grid
             item
             sx={{
@@ -83,9 +81,9 @@ const LoginAsAdmin = () => {
               type="submit"
               variant="contained"
               sx={{
-                width: "200px",
+                width: "300px",
                 height: "50px",
-                mt: "10px",
+                mt: "25px",
                 bgcolor: "#240750",
               }}
             >

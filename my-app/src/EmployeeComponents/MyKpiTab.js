@@ -6,6 +6,9 @@ import Box from "@mui/material/Box";
 import DisplayMyKpi from "./DisplayMyKpi";
 import useFetchKpi from "../CustomHook/useFetchKpi";
 import FillKpiTab from "./FillKpiTab";
+import Kpi_history from "./KpiHistory";
+import KpiHistory from "./KpiHistory";
+;
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -76,6 +79,7 @@ export default function MyKpiTab() {
         >
           <Tab label="MY KPI" {...a11yProps(0)} />
           <Tab label="Fill KPI" {...a11yProps(1)} />
+          <Tab label="KPI HISTORY" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
@@ -87,6 +91,9 @@ export default function MyKpiTab() {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <FillKpiTab kpiList={kpiList} noDataFound={noDataFound} error={error} />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={2} sx={{ height: 500, overflowY: "scroll" ,}}>
+        <KpiHistory/>
       </CustomTabPanel>
     </Box>
   );

@@ -7,7 +7,7 @@ const Sidebar = ({ list }) => {
     alignItems: "center",
     height: "70px",
   });
-  console.log(list);
+
   return (
 
     <Box

@@ -6,10 +6,10 @@ import RoleTab from './RoleTab'
 const Role = () => {
   return (
     <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="2px">
-      <Grid  xs={12} md={4}>
+      <Grid item xs={12} md={4}>
         <DisplayCards/>
       </Grid>
-      <Grid  mt="19px" xs={11} md={7.6}  >
+      <Grid item  mt="19px" xs={11} md={7.6}  >
        <Card  ><RoleTab/></Card>
         
       </Grid>
