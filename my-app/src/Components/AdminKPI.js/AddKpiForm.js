@@ -1,4 +1,13 @@
-import {Grid,Button,Select,MenuItem,FormControl,InputLabel,Alert} from "@mui/material";
+import {
+  Grid,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Alert,
+  Typography,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
@@ -93,7 +102,6 @@ const AddKpiForm = () => {
       container
       spacing={2}
       sx={{
-        paddingTop: "20px",
         justifyContent: "center",
         alignItems: "center",
       }}
@@ -138,27 +146,23 @@ const AddKpiForm = () => {
           onSubmit={onSubmit}
         >
           {(props) => (
-            <Grid component={Form} spacing={2}>
-              <Grid container spacing={1}>
-                <Grid item xs={6} >
+            <Form>
+              <Grid container spacing={2} >
+                <Grid item xs={12} sm={12} md={5.6} sx={{"&.MuiGrid-item": {
+                p: 0,
+                mt:1,
+                  ml:2
+              },}}>
                   <FormControl fullWidth>
                     <InputLabel id="demo-simple-select-label">
-                      {props.errors.department && props.touched.department
-                        ? `${props.department}`
-                        : "Select Department"}
+                      Select Department
                     </InputLabel>
                     <Select
                       value={props.values.department}
-                      defaultValue=""
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       error={
                         props.errors.department && props.touched.department
-                      }
-                      label={
-                        props.errors.department && props.touched.department
-                          ? `${props.department}`
-                          : "Select Department"
                       }
                       onChange={(e) => {
                         handleDepartmentChange(e);
@@ -181,32 +185,53 @@ const AddKpiForm = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} sm={12} md={5.6} sx={{"&.MuiGrid-item": {
+                p: 0,
+                ml:{
+                  xs:2,
+                  md:1.5
+                },
+                mt:1
+              },}}>
                   <SelectInput
                     departmentList={roleList}
                     name="role"
                     label="Select Designation"
                   />
                 </Grid>
+                <Grid item xs={12} sx={{"&.MuiGrid-item": {
+                p: 0,
+                m:0,
+                ml:2
+              },}}>
+                  <TextInput label="Enter KPI Description" name="description" />
+                </Grid>
+                <Grid item xs={12} sx={{"&.MuiGrid-item": {
+                p: 0,
+                m:0,
+                ml:2
+              },}}>
+                  <TextInput label="Enter Maximum Weight" name="weight" />
+                </Grid>
+                <Grid item xs={12} sx={{"&.MuiGrid-item": {
+                p: 0,
+                m:0,ml:2
+              },display: "flex",justifyContent: "center"}} >
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    sx={{
+                      width: 300,
+                      height: "50px",
+                      alignSelf: "center",
+                      mt: "10px",
+                    }}
+                  >
+                    Add KPI
+                  </Button>
+                </Grid>
               </Grid>
-
-              <Grid item xs={12}>
-                <TextInput label="Enter KPI Description" name="description" />
-              </Grid>
-              <Grid item xs={12}>
-                <TextInput label="Enter Maximum Weight" name="weight" />
-              </Grid>
-
-              <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{ width: "200px", height: "50px", alignSelf: "center" ,mt:"10px"}}
-                >
-                  Add KPI
-                </Button>
-              </Grid>
-            </Grid>
+            </Form>
           )}
         </Formik>
       </Grid>

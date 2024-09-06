@@ -11,7 +11,7 @@ const LoginAsAdmin = () => {
   const onSubmit = async (values) => {
     const username = values.username;
     const password = values.password;
-    const response = await fetch("http://localhost:4000/api/admin/login", {
+     fetch("http://localhost:4000/api/admin/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

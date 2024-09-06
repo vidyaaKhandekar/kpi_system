@@ -34,7 +34,7 @@ export default function OverviewCard() {
   return (
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined"> <CardContent>
-        <Grid container>
+        <Grid container alignItems='centre' justifyContent='space-evenly'>
           <Grid item xs={12}>
             <Typography
               sx={{ fontSize: 14, mb: "20px" }}

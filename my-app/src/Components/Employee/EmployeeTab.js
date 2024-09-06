@@ -37,15 +37,13 @@ function a11yProps(index) {
 }
 
 export default function EmployeeTab() {
-  ///fetch data
-
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   return (
-    <Box sx={{ width: "100%", height: "700px" }}>
+    <Box sx={{ width: "100%", height: "700px",backgroundColor:'white' }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}

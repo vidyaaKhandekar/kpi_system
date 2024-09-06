@@ -27,11 +27,7 @@ const Navbar = () => {
   const navigate =useNavigate() ;
   const handleLogout = () => {
     
-    localStorage.removeItem("token");
-    localStorage.removeItem("userData");
-    localStorage.removeItem("username");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userProfile");
+    localStorage.clear();
     setAuth(false);
     navigate("/login", { replace: true }); 
   };

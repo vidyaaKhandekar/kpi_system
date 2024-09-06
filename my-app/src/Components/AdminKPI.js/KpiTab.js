@@ -43,7 +43,7 @@ export default function KpiTab() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "700px" }}>
+    <Box sx={{ width: "100%", height: "700px" ,bgcolor:'white'}}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -61,7 +61,7 @@ export default function KpiTab() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            mt:"30px"
+            mt:2
           }}
         >
           <AddKpiForm />

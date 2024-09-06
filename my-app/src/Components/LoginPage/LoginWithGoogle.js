@@ -1,16 +1,14 @@
 import { Button, Stack, Typography } from "@mui/material";
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, {useEffect } from "react";
 import {useNavigate} from 'react-router-dom'
-
+import axios from "axios";
 const LoginWithGoogle = () => {
   const navigate = useNavigate()
-  const loginWithGoogle1 = () => {
+  const loginWithGoogle1 = async() => {
     window.open("http://localhost:4000/auth/google/callback", "_self");
     getUser();
   };
-  const [userData, setUserData] = useState({});
-  console.log("Responce: ", userData);
+ 
   const getUser = async () => {
     try {
       const responce = await axios.get(
@@ -20,14 +18,15 @@ const LoginWithGoogle = () => {
         }
       );
 
-      setUserData(responce.data.user);
       localStorage.setItem("userData", JSON.stringify(responce.data.user));
       localStorage.setItem("userProfile", "Employee");
     } catch (error) {
       console.log("Error: ", error);
     }
   };
-  
+
+
+ 
   return (
     <Stack
       sx={{

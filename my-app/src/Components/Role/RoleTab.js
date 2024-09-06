@@ -44,7 +44,7 @@ export default function RoleTab() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "700px" }}>
+    <Box sx={{ width: "100%", height: "700px" ,bgcolor:'white'}}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}

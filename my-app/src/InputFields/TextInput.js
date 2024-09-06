@@ -1,15 +1,34 @@
-import { TextField } from '@mui/material'
-import { Field, useField } from 'formik'
-import React from 'react'
+import { TextField } from "@mui/material";
+import { useField } from "formik";
+import React, { useEffect } from "react";
 
-function TextInput({label,...props}) {
-    const[meta,field,helper]=useField(props)
-        
+function TextInput({ label,value, ...props }) {
+  const [meta, field] = useField(props);
+  // useEffect(()=>{
+  //   console.log("meta",meta)
+  //   console.log("field",field)
+  //   console.log("value",value)
+  // },[])
   return (
-    <TextField sx={{width:"100%",mt:"10px"}} {...props} {...meta}
-        error={field.error&&field.touched}
-        label={field.error&&field.touched?`${field.error}`:`${label}`} multiline />
-  )
+    <TextField
+      sx={{
+
+        width: "100%",
+        mt: "1px",
+        "& .MuiFormHelperText-root": {
+          ml:0
+        },
+      }}
+      {...props}
+      {...meta}
+   
+      defaultValue={value}
+      error={field.error && field.touched}
+      label={label}
+      multiline
+      helperText={field.error && field.touched ? `${field.error}` : ""}
+    />
+  );
 }
 
-export default TextInput
+export default TextInput;

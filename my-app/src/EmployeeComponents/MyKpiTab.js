@@ -6,7 +6,6 @@ import Box from "@mui/material/Box";
 import DisplayMyKpi from "./DisplayMyKpi";
 import useFetchKpi from "../CustomHook/useFetchKpi";
 import FillKpiTab from "./FillKpiTab";
-import Kpi_history from "./KpiHistory";
 import KpiHistory from "./KpiHistory";
 ;
 

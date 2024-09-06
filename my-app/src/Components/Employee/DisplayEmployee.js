@@ -1,18 +1,16 @@
-import { Stack, Button } from "@mui/material";
+import { Stack, Button, Grid } from "@mui/material";
 import React from "react";
 import SelectInput from "../../InputFields/SelectInput";
 import { Form, Formik } from "formik";
 import useFetch from "../../CustomHook/useFetch";
 import { useEffect, useState } from "react";
 import { DepartmentSchema } from "../ValidationSchema";
-import { EmployeeTableColumns } from "../../TableContent/Tablecolums";
-import DisplayTable from "../../TableContent/DisplayTable";
-
+import DisplayTable from "../../TableContent/DisplayEmployeeTable";
 
 const DisplayEmployee = () => {
   const [departmentList, setDepartmentList] = useState([]);
+  const[departmentId,setDepartmentId]=useState();
   const [Employee, setEmployee] = useState([]);
-  const [Role,setRole]=useState([]);
   const { data, isLoading, error } = useFetch(
     "http://localhost:4000/api/dept/getAll"
   );
@@ -22,9 +20,8 @@ const DisplayEmployee = () => {
 
     setDepartmentList(data);
   }, [data, isLoading, error]);
-  //fetch role according to selected department
-  const onSubmit = async (values, { resetForm }) => {
-    const deptId = values.department;   
+  //fetch Employee according to selected department
+  const fetchAllEmployee = async (deptId) => {   
     const response = await fetch(
       `http://localhost:4000/api/emp/getByDept/${deptId}`,
       {
@@ -39,27 +36,7 @@ const DisplayEmployee = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list=data;
-    console.log(list);
-    setEmployee(list);
-    const response2 = await fetch(
-      `http://localhost:4000/api/role/getByDept/${deptId}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: window.localStorage.getItem("token"),
-        },
-      }
-    );
-    // console.log(response);
-    if (!response2.ok) {
-      console.log("Network ");
-    }
-    const data2 = await response2.json();
-    const list2 = data2;
-    console.log(list2,"roles");
-    setRole(list2);
+    setEmployee(data);
   };
   
   if(Employee){
@@ -67,7 +44,7 @@ const DisplayEmployee = () => {
       obj.name = `${obj.f_name} ${obj.l_name}`;
       return obj;
     });
-    console.log(Employee)
+   
   }
 
   return (
@@ -77,47 +54,55 @@ const DisplayEmployee = () => {
         paddingTop: "50px",
         justifyContent: "centre",
         alignItems: "center",
-        
+        width:"100%"
       }}
     >
-   
       <Formik
         initialValues={{
           department: "",
         }}
         validationSchema={DepartmentSchema}
-        onSubmit={onSubmit}
+        onSubmit={(values)=>{
+          fetchAllEmployee(values.department)
+          setDepartmentId(values.department)
+        }}
       >
         {(props) => (
-          <Stack
-            direction="row"
+          <Grid
+           
             component={Form}
             spacing={2}
             sx={{ width: "80%" }}
+           
+            justifyContent='center'
+            alignItems='center'
           >
+            
+            <Grid item xs={12}>
             <SelectInput
               departmentList={departmentList}
               name="department"
               label="Select Department"
-              error={props.errors.department ? true : false}
             />
+            </Grid>
+            <Grid item xs={12} mt={1} sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button
               type="submit"
               variant="contained"
-              sx={{ width: "200px", height: "56px", alignSelf: "center" }}
+              sx={{  height: "56px", alignSelf: "center" ,width:'70%'}}
             >
               Get Employee
             </Button>
-          </Stack>
+            </Grid>
+            
+          </Grid>
           
         )}
         
       </Formik>
-    
-        
-      {Employee?.length!==0 ? <DisplayTable row={Employee} columns={EmployeeTableColumns}/>:null }
+      {Employee?.length!==0 ? <DisplayTable row={Employee} fetchAllEmployee={fetchAllEmployee}  departmentId={departmentId}/>:null }
     </Stack>
   );
+ 
 };
-
 export default DisplayEmployee;

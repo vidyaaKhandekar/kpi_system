@@ -1,18 +1,23 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Card from '@mui/material/Card';
 import DepartmentTab from "./DepartmentTab";
 import DisplayCards from "../DisplayCards";
 const Department = () => {
-  
   return (
-    <Grid container bgcolor="#FFEAE3" spacing={4} mt="0px" ml="2px">
-      <Grid  xs={12} md={4}>
-        <DisplayCards/>
+    <Grid container bgcolor="grey" spacing={1} >
+      <Grid item xs={11.8} md={5.5}>
+        <DisplayCards />
       </Grid>
-      <Grid  mt="19px" xs={11} md={7.6}  >
-       <Card><DepartmentTab/></Card>
+      <Grid
+        item
+        mt="19px"
+        xs={11}
+        sm={11.3}
+        md={6.1}
+        m={2}
         
+      >
+        <DepartmentTab />
       </Grid>
     </Grid>
   );

@@ -3,8 +3,8 @@ import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
 import SelectInput from "../../InputFields/SelectInput";
-import DisplayTable from "../../TableContent/DisplayTable";
 import { KpiTableColumns } from "../../TableContent/Tablecolums";
+import DisplayTable from "../../TableContent/DisplayTable";
 
 const DisplayKpi = () => {
   const [departmentList, setDepartmentList] = useState([]);
@@ -57,8 +57,6 @@ const DisplayKpi = () => {
      setError("Problem in Fetching data")
     }
     const data = await response.json();
-
-    console.log("KPI", data);
     if (data.length === 0) {
       setKpiList([]);
       setNoDataFound(true); // set a state variable to true
@@ -143,7 +141,7 @@ const DisplayKpi = () => {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} mt={1} sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
                   type="submit"
                   variant="contained"
@@ -186,7 +184,9 @@ const DisplayKpi = () => {
         </Grid>
       ) : null}
     </Grid>
+
   );
 };
+
 
 export default DisplayKpi;

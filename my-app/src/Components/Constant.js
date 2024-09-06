@@ -19,7 +19,7 @@ export const EmplList = [
   },
   {
     icon: <GroupsIcon sx={commonSx} />,
-    text: "approvar",
+    text: "Approvar",
   },
 ];
 
@@ -109,7 +109,7 @@ export const EmployeeBottomBar = [
     icon: <DashboardIcon />,
   },
   {
-    label: "approvar",
+    label: "Approvar",
     to: "approvar",
     icon: <GroupsIcon />,
   },

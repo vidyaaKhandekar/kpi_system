@@ -2,27 +2,24 @@ import * as yup from 'yup';
 //validation schema for the yup library
 
 export const DepartmentSchema=yup.object().shape({
-    department:yup.string().required("required Field")
+    department:yup.string().required("Department Required")
 })
-/*
-error={formik.errors.department?true:false} 
-                label={formik.errors.department?"department is required field":""} 
-*/
+
 export const AddRoleformSchema=yup.object().shape({
-    department:yup.string().required("Department is required field"),
-    role:yup.string().required("role is required field")
+    department:yup.string().required("Department Required"),
+    role:yup.string().required("Role Required")
 })
 
 //Schema for KPI form
 export const AddKpiFormSchema=yup.object().shape({
-    description:yup.string().required("required field"),
-    weight:yup.number("Weight must be number").required("Required Field"),
-    department:yup.string().required("Department is required field"),
-    role:yup.string().required("role is required field")
+    description:yup.string().required("Deacription Required"),
+    weight:yup.number("Weight must be number").required("Weight Required"),
+    department:yup.string().required("Department Required "),
+    role:yup.string().required("Role Required")
  })
 
  export const LoginAsAdminSchema=yup.object().shape({
-    username:yup.string().required("Username required"),
+    username:yup.string().required("Username Required"),
     password:yup.string().required("Password Required")
 
  })
@@ -30,8 +27,8 @@ export const AddKpiFormSchema=yup.object().shape({
 
   //Yup validation
   export const AddEmployeeFormSchema = yup.object().shape({
-    firstName: yup.string().required("name is required field"),
-    lastName: yup.string().required("name is required field"),
+    firstName: yup.string().required("First Name Required"),
+    lastName: yup.string().required("Last Name Required"),
     email: yup
       .string()
       .email("Invalid Email")
@@ -39,7 +36,7 @@ export const AddKpiFormSchema=yup.object().shape({
         /@tekditechnologies\.com$/,
         "Email must end with @tekditechnologies.com"
       )
-      .required("Email is required"),
-    department: yup.string().required("Department is required field"),
-    role: yup.string().required("Role is departmentrequired"),
+      .required("Email Required"),
+    department: yup.string().required("Department Required"),
+    role: yup.string().required("Role Required"),
   });

@@ -58,7 +58,7 @@ export default function DepartmentTab() {
   };
 
   return (
-    <Box sx={{ width: "100%", height: "700px" }}>
+    <Box sx={{ width: "100%", height: "600px",bgcolor:'white' }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}

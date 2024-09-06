@@ -1,40 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
-import {
-  styled,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from "@mui/material";
+import {styled,Table,TableBody,TableCell,TableContainer,TableHead,TableRow,} from "@mui/material";
 import AdditionalInfo from "../Approvar/AdditionalInfo";
 const StyledTableContainer = styled(TableContainer)`
-  height: 500px; /* set the height of the table container */
-  overflow-y: auto; /* make the table body scrollable */
-  border: 1px solid #ddd; /* add a border to the table */
+  height: 500px; 
+  overflow-y: auto;
+  border: 1px solid #ddd; 
 `;
 
 const StyledTableHead = styled(TableHead)`
-  position: sticky; /* make the table head sticky */
+  position: sticky; 
   top: 0;
   z-index: 1;
-  border-bottom: 1px solid #ddd; /* add a border to the table head */
+  border-bottom: 1px solid #ddd; 
 `;
 
 const StyledTableRow = styled(TableRow)`
   & > th {
-    position: sticky; /* make the table head cells sticky */
+    position: sticky; 
     left: 0;
-    border-right: 1px solid #ddd; /* add a border to the table head cells */
+    border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
   }
 `;
 
 const StyledTableCell = styled(TableCell)`
-  border-right: 1px solid #ddd; /* add a border to the table cells */
+  border-right: 1px solid #ddd;
 `;
 
 const PreviewTable = () => {
