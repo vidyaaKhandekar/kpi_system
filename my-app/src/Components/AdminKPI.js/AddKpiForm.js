@@ -1,13 +1,4 @@
-import {
-  Grid,
-  Button,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Alert,
-  Typography,
-} from "@mui/material";
+import {Grid,Button,Select,MenuItem,FormControl,InputLabel,Alert,} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
@@ -27,13 +18,10 @@ const AddKpiForm = () => {
   useEffect(() => {
     if (isLoading) return;
     if (error) return console.error(error);
-    console.log(data);
     setDepartmentList(data);
   }, [data, isLoading, error]);
 
   const handleDepartmentChange = async (e) => {
-    console.log("Called");
-
     const response = await fetch(
       `http://localhost:4000/api/role/getByDept/${e.target.value}`,
       {
@@ -70,11 +58,14 @@ const AddKpiForm = () => {
         roleId: roleId,
       }),
     })
-      .then((response) => {
+      .then(async (response) => {
+        const data = await response.json();
         if (response.ok) {
           setSuccess("Successfully added");
+          
         } else {
-          setError("Error in Adding ");
+          setError(data.message);
+          
         }
       })
       .catch((error) => {
@@ -148,17 +139,18 @@ const AddKpiForm = () => {
           {(props) => (
             <Form>
               <Grid container spacing={2} >
-                <Grid item xs={12} sm={12} md={5.6} sx={{"&.MuiGrid-item": {
+                <Grid item xs={12} sm={5.6} md={5.6} sx={{"&.MuiGrid-item": {
                 p: 0,
                 mt:1,
                   ml:2
               },}}>
                   <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Select Department
+                    <InputLabel >
+                     Department
                     </InputLabel>
                     <Select
                       value={props.values.department}
+                      label={"Department"}
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       error={
@@ -185,37 +177,40 @@ const AddKpiForm = () => {
                     </Select>
                   </FormControl>
                 </Grid>
-                <Grid item xs={12} sm={12} md={5.6} sx={{"&.MuiGrid-item": {
+                <Grid item xs={12} sm={5.6} md={5.6} sx={{"&.MuiGrid-item": {
                 p: 0,
                 ml:{
                   xs:2,
-                  md:1.5
+                  sm:1,
+                  md:1
                 },
                 mt:1
               },}}>
                   <SelectInput
                     departmentList={roleList}
                     name="role"
-                    label="Select Designation"
+                    label="Designation"
                   />
                 </Grid>
                 <Grid item xs={12} sx={{"&.MuiGrid-item": {
                 p: 0,
                 m:0,
+                mt:1,
                 ml:2
               },}}>
-                  <TextInput label="Enter KPI Description" name="description" />
+                  <TextInput label="KPI Description" name="description" />
                 </Grid>
                 <Grid item xs={12} sx={{"&.MuiGrid-item": {
                 p: 0,
                 m:0,
+                mt:1,
                 ml:2
               },}}>
-                  <TextInput label="Enter Maximum Weight" name="weight" />
+                  <TextInput label="Maximum Weight" name="weight" />
                 </Grid>
                 <Grid item xs={12} sx={{"&.MuiGrid-item": {
                 p: 0,
-                m:0,ml:2
+                m:0,ml:2,
               },display: "flex",justifyContent: "center"}} >
                   <Button
                     type="submit"
