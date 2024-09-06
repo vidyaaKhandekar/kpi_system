@@ -69,12 +69,17 @@ function DisplayEmployeeTable({ row, fetchAllEmployee, departmentId }) {
     setInitialValues();
     setOpen(false);
   };
-  const rows = row;
+  const[rows,setRows]=useState();
+  useEffect(()=>{
+    const data=row?.map((item, index) => ({ ...item, serialNo: index + 1 }));
+    setRows(data);
+    
+  },[row])
   const columns = [
     {
-      field: "id",
-      headerName: "ID",
-      width: 50,
+      field: "serialNo",
+      headerName: "No",
+      width: 100,
       sortable: false,
       filterable: false,
     },

@@ -30,8 +30,8 @@ export const EmployeeTableColumns = [
 //select id, description, weight from kpi where role_id=${id}
 export const KpiTableColumns = [
   {
-    field: "id",
-    headerName: "KPI ID",
+    field: "serialNo",
+    headerName: "No",
     width: 100,
     sortable: false,
     filterable: false,

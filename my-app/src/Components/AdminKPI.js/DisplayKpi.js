@@ -1,4 +1,12 @@
-import {Grid,Button,Select,MenuItem,FormControl,InputLabel,Alert} from "@mui/material";
+import {
+  Grid,
+  Button,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Alert,
+} from "@mui/material";
 import { Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import useFetch from "../../CustomHook/useFetch";
@@ -37,9 +45,7 @@ const DisplayKpi = () => {
       console.log("Network ");
     }
     const data = await response.json();
-    const list = data;
-    console.log(list);
-    setRoleList(list);
+    setRoleList(data);
   };
 
   const onSubmit = async (values, { resetForm }) => {
@@ -54,7 +60,7 @@ const DisplayKpi = () => {
       }
     );
     if (!response.ok) {
-     setError("Problem in Fetching data")
+      setError("Problem in Fetching data");
     }
     const data = await response.json();
     if (data.length === 0) {
@@ -92,84 +98,91 @@ const DisplayKpi = () => {
           onSubmit={onSubmit}
         >
           {(props) => (
-            <Grid component={Form} spacing={2}>
-              <Grid container spacing={1}>
-                <Grid item xs={12} sm={5} md={5}>
-                  <FormControl fullWidth>
-                    <InputLabel id="demo-simple-select-label">
-                      Department
-                    </InputLabel>
-                    <Select
-                      value={props.values.department}
-                      defaultValue=""
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      error={
-                        props.errors.department && props.touched.department
-                      }
-                      label={
-                        props.errors.department && props.touched.department
-                          ? `${props.department}`
-                          : "department"
-                      }
-                      onChange={(e) => {
-                        handleDepartmentChange(e);
-                        props.setFieldValue("department", e.target.value);
-                      }}
-                      MenuProps={{
-                        PaperProps: {
-                          style: {
-                            maxHeight: 200,
-                            overflowY: "auto",
+            <Form>
+              <Grid item xs={12} sm={12} md={12}>
+                <Grid container spacing={2} direction={"row"}>
+                  <Grid item xs={6} sm={6} md={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Department
+                      </InputLabel>
+                      <Select
+                        value={props.values.department}
+                        defaultValue=""
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        error={
+                          props.errors.department && props.touched.department
+                        }
+                        label={
+                          props.errors.department && props.touched.department
+                            ? `${props.department}`
+                            : "department"
+                        }
+                        onChange={(e) => {
+                          handleDepartmentChange(e);
+                          props.setFieldValue("department", e.target.value);
+                        }}
+                        MenuProps={{
+                          PaperProps: {
+                            style: {
+                              maxHeight: 200,
+                              overflowY: "auto",
+                            },
                           },
-                        },
+                        }}
+                      >
+                        {departmentList?.map((item) => (
+                          <MenuItem key={item.id} value={item.id}>
+                            {item.name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6} sm={6} md={6}>
+                    <SelectInput
+                      departmentList={roleList}
+                      name="role"
+                      label="Designation"
+                    />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={12}
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{
+                        width: "200px",
+                        height: "50px",
+                        alignSelf: "center",
+                        mt: "8px",
                       }}
                     >
-                      {departmentList?.map((item) => (
-                        <MenuItem key={item.id} value={item.id}>
-                          {item.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={5} md={5}>
-                  <SelectInput
-                    departmentList={roleList}
-                    name="role"
-                    label="role"
-                  />
+                      Get KPI's
+                    </Button>
+                  </Grid>
+                  {Error && (
+                    <Grid item xs={12}>
+                      <Alert
+                        severity="danger"
+                        duration={2000}
+                        position={{
+                          top: 16,
+                          right: 16,
+                        }}
+                      >
+                        {Error}
+                      </Alert>
+                    </Grid>
+                  )}
                 </Grid>
               </Grid>
-              <Grid item xs={12} mt={1} sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                  type="submit"
-                  variant="contained"
-                  sx={{
-                    width: "200px",
-                    height: "50px",
-                    alignSelf: "center",
-                    mt: "8px",
-                  }}
-                >
-                  Get KPI's
-                </Button>
-              </Grid>
-              {Error && (
-                <Grid item xs={12}>
-                  <Alert
-                    severity="danger"
-                    duration={2000}
-                    position={{
-                      top: 16,
-                      right: 16,
-                    }}
-                  >
-                    {Error}
-                  </Alert>
-                </Grid>
-              )}
-            </Grid>
+            </Form>
           )}
         </Formik>
       </Grid>
@@ -184,9 +197,7 @@ const DisplayKpi = () => {
         </Grid>
       ) : null}
     </Grid>
-
   );
 };
-
 
 export default DisplayKpi;

@@ -6,6 +6,7 @@ import useFetch from "../../CustomHook/useFetch";
 import { useEffect, useState } from "react";
 import { DepartmentSchema } from "../ValidationSchema";
 import DisplayTable from "../../TableContent/DisplayEmployeeTable";
+import DisplayEmployeeTable from "../../TableContent/DisplayEmployeeTable";
 
 const DisplayEmployee = () => {
   const [departmentList, setDepartmentList] = useState([]);
@@ -100,7 +101,8 @@ const DisplayEmployee = () => {
         )}
         
       </Formik>
-      {Employee?.length!==0 ? <DisplayTable row={Employee} fetchAllEmployee={fetchAllEmployee}  departmentId={departmentId}/>:null }
+      {Employee?.length!==0 ? <DisplayEmployeeTable row={Employee} fetchAllEmployee={fetchAllEmployee}  departmentId={departmentId}/>:null }
+   
     </Stack>
   );
  
