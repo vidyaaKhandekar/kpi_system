@@ -104,7 +104,8 @@ const EditEmployeeForm = ({
     handleDepartmentChange();
 
   }, [deptId]);
-  const value = useState(initialValue);
+
+
   return (
     <Grid
       container
@@ -118,7 +119,7 @@ const EditEmployeeForm = ({
       }}
     >
     <Formik
-        initialValues={value}
+        initialValues={initialValue}
         validationSchema={AddEmployeeFormSchema}
         onSubmit={onSubmit}
       >
@@ -141,7 +142,6 @@ const EditEmployeeForm = ({
                   value={props.values?.firstName}
                 />
               </Grid>
-
               <Grid item xs={6}>
                 <TextInput label="Last Name*" name="lastName" />
               </Grid>
