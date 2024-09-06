@@ -5,7 +5,7 @@ export default function DisplayTable({ row, columns }) {
   const rows = row;
   
   return (
-    <div style={{ height: 400, width: "80%" }}>
+    <div style={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
